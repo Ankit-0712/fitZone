@@ -1,0 +1,11 @@
+<div class="categories-container">
+  <h2>Workout Categories</h2>
+  <p>Select a muscle group to explore targeted exercises.</p>
+
+  <div class="categories-grid">
+    <div class="category-card" *ngFor="let category of categories" (click)="goToCategory(category)">
+      <img [src]="category.image" [alt]="category.name" />
+      <h3>{{ category.name }}</h3>
+    </div>
+  </div>
+</div>

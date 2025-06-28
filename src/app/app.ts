@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { Navbar } from './shared/navbar/navbar' // update path as needed
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  standalone: true,
+  imports: [RouterModule, Navbar],
+  template: `
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+  `,
 })
-export class App {
-  protected title = 'fitZone';
-}
+export class App {}

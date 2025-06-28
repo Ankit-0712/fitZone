@@ -1,0 +1,53 @@
+<div class="plan-builder">
+  <h2>Workout Plan Builder</h2>
+
+  <!-- Day Selection -->
+  <label for="day">Select Day:</label>
+  <select id="day" [(ngModel)]="selectedDay">
+    <option *ngFor="let day of daysOfWeek" [value]="day">{{ day }}</option>
+  </select>
+
+  <!-- Category Selection -->
+  <label for="category">Select Category:</label>
+  <select id="category" [(ngModel)]="selectedCategory">
+    <option [value]="''" disabled selected>Select Category</option>
+    <option *ngFor="let category of categoryList" [value]="category">{{ category }}</option>
+  </select>
+
+  <!-- Exercise Selection -->
+  <label for="exercise">Select Exercise:</label>
+  <select id="exercise" [(ngModel)]="selectedExercise">
+    <option [value]="''" disabled selected>Select Exercise</option>
+    <option *ngFor="let exercise of exercisesForSelectedCategory" [value]="exercise">{{ exercise }}</option>
+  </select>
+
+  <!-- Add Button -->
+  <button (click)="addExercise()">Add</button>
+
+  <!-- Display Plan for Selected Day -->
+  <div class="exercise-list" *ngIf="workoutPlan[selectedDay]?.length">
+    <h3>{{ selectedDay }} Plan:</h3>
+    <ul>
+      <li *ngFor="let exercise of workoutPlan[selectedDay]">
+        {{ exercise }}
+        <button (click)="removeExercise(selectedDay, exercise)">Remove</button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Display Full Plan -->
+  <div class="full-plan" *ngIf="hasAnyPlan()">
+    <h3>Full Weekly Plan:</h3>
+    <div *ngFor="let day of daysOfWeek">
+      <div *ngIf="workoutPlan[day]?.length">
+        <strong>{{ day }}:</strong>
+        <ul>
+          <li *ngFor="let ex of workoutPlan[day]">{{ ex }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download Button -->
+  <button class="download-btn" (click)="downloadFullPlanAsPDF()">Download Full Plan as PDF</button>
+</div>
