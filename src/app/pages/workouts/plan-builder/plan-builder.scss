@@ -2,43 +2,47 @@
   padding: 2rem;
   max-width: 720px;
   margin: 2rem auto;
-  background: #f9f9f9;
-  border: 1px solid #ddd;
+  background: #0f0f0f; // Pure black background
+  border: 1px solid #2d2d2d;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.05); // subtle red glow
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ 
 
   label {
     display: block;
     margin-top: 1.2rem;
     font-weight: 600;
-    color: #333;
+    color: #f3f4f6; // light gray text
     font-size: 0.95rem;
   }
 
-  select, button {
+  select,
+  button {
     margin-top: 0.5rem;
     margin-bottom: 1.2rem;
     display: block;
     width: 100%;
     padding: 0.6rem 0.75rem;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #444;
     font-size: 0.95rem;
-    background: #fff;
+    background: #000000; // black background for input
+    color: #ffffff;
     transition: border-color 0.3s, box-shadow 0.3s;
 
     &:focus {
-      border-color: #1976d2;
-      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
       outline: none;
     }
   }
 
-  h2, h3 {
+  h2,
+  h3 {
     text-align: center;
     margin-top: 1rem;
-    color: #222;
+    color: #ef4444;
     font-size: 1.4rem;
     font-weight: 700;
   }
@@ -51,17 +55,18 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #fff;
+      background: #000000; // black list item background
       padding: 0.6rem 0.8rem;
       border-radius: 6px;
-      border: 1px solid #e0e0e0;
+      border: 1px solid #2d2d2d;
 
       span {
         font-weight: 500;
+        color: #e5e7eb;
       }
 
       button {
-        background-color: #ff4d4d;
+        background-color: #ef4444;
         color: white;
         border: none;
         padding: 0.35rem 0.8rem;
@@ -71,14 +76,14 @@
         transition: background-color 0.3s;
 
         &:hover {
-          background-color: #d63031;
+          background-color: #b91c1c;
         }
       }
     }
   }
 
   .download-btn {
-    background-color: #1976d2;
+    background-color: #ef4444;
     color: #fff;
     border: none;
     padding: 0.9rem;
@@ -91,7 +96,7 @@
     transition: background 0.3s ease;
 
     &:hover {
-      background-color: #115293;
+      background-color: #b91c1c;
     }
   }
 }
