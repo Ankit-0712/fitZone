@@ -1,54 +1,271 @@
-<div class="plan-builder">
-
-  <h2>Workout Plan Builder</h2>
-
-  <!-- Day Selection -->
-  <label for="day">Select Day:</label>
-  <select id="day" [(ngModel)]="selectedDay">
-    <option *ngFor="let day of daysOfWeek" [value]="day">{{ day }}</option>
-  </select>
-
-  <!-- Category Selection -->
-  <label for="category">Select Category:</label>
-  <select id="category" [(ngModel)]="selectedCategory">
-    <option [value]="''" disabled selected>Select Category</option>
-    <option *ngFor="let category of categoryList" [value]="category">{{ category }}</option>
-  </select>
-
-  <!-- Exercise Selection -->
-  <label for="exercise">Select Exercise:</label>
-  <select id="exercise" [(ngModel)]="selectedExercise">
-    <option [value]="''" disabled selected>Select Exercise</option>
-    <option *ngFor="let exercise of exercisesForSelectedCategory" [value]="exercise">{{ exercise }}</option>
-  </select>
-
-  <!-- Add Button -->
-  <button (click)="addExercise()">Add</button>
-
-  <!-- Display Plan for Selected Day -->
-  <div class="exercise-list" *ngIf="workoutPlan[selectedDay]?.length">
-    <h3>{{ selectedDay }} Plan:</h3>
-    <ul>
-      <li *ngFor="let exercise of workoutPlan[selectedDay]">
-        {{ exercise }}
-        <button (click)="removeExercise(selectedDay, exercise)">Remove</button>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Display Full Plan -->
-  <div class="full-plan" *ngIf="hasAnyPlan()">
-    <h3>Full Weekly Plan:</h3>
-    <div *ngFor="let day of daysOfWeek">
-      <div *ngIf="workoutPlan[day]?.length">
-        <strong>{{ day }}:</strong>
-        <ul>
-          <li *ngFor="let ex of workoutPlan[day]">{{ ex }}</li>
-        </ul>
+<div class="plan-builder-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="header-content">
+      <h1>🏋️‍♂️ Workout Plan Builder</h1>
+      <p>Create your personalized fitness journey with our advanced plan builder</p>
+    </div>
+    
+    <!-- Plan Summary -->
+    <div class="plan-summary" *ngIf="hasAnyPlan()">
+      <div class="summary-card">
+        <div class="summary-icon">📊</div>
+        <div class="summary-info">
+          <span class="summary-number">{{ totalExercises }}</span>
+          <span class="summary-label">Exercises</span>
+        </div>
       </div>
+      <div class="summary-card">
+        <div class="summary-icon">⏱️</div>
+        <div class="summary-info">
+          <span class="summary-number">{{ estimatedTotalTime }}</span>
+          <span class="summary-label">Total Time</span>
+        </div>
+      </div>
+              <div class="summary-card">
+          <div class="summary-icon">📅</div>
+          <div class="summary-info">
+            <span class="summary-number">{{ workoutDaysCount }}</span>
+            <span class="summary-label">Workout Days</span>
+          </div>
+        </div>
     </div>
   </div>
 
-  <!-- Download Button -->
-  <button class="download-btn" (click)="downloadFullPlanAsPDF()">Download Full Plan as PDF</button>
+  <!-- Navigation Tabs -->
+  <div class="tab-navigation">
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'builder'"
+      (click)="activeTab = 'builder'"
+    >
+      <span class="tab-icon">🔨</span>
+      Custom Builder
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'templates'"
+      (click)="activeTab = 'templates'"
+    >
+      <span class="tab-icon">📋</span>
+      Templates
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="activeTab === 'plan'"
+      (click)="activeTab = 'plan'"
+      [disabled]="!hasAnyPlan()"
+    >
+      <span class="tab-icon">📖</span>
+      My Plan
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    
+    <!-- Custom Builder Tab -->
+    <div class="tab-panel" *ngIf="activeTab === 'builder'">
+      <div class="builder-section">
+        <div class="exercise-selector">
+          <h3>Add Exercises</h3>
+          
+          <!-- Day Selection -->
+          <div class="form-group">
+            <label for="day">Select Day</label>
+            <select id="day" [(ngModel)]="selectedDay" class="form-select">
+              <option *ngFor="let day of daysOfWeek" [value]="day">{{ day }}</option>
+            </select>
+          </div>
+
+          <!-- Category Selection -->
+          <div class="form-group">
+            <label for="category">Muscle Group</label>
+            <select id="category" [(ngModel)]="selectedCategory" class="form-select">
+              <option value="">Choose a category</option>
+              <option *ngFor="let category of categoryList" [value]="category">{{ category }}</option>
+            </select>
+          </div>
+
+          <!-- Exercise Selection -->
+          <div class="form-group" *ngIf="selectedCategory">
+            <label for="exercise">Exercise</label>
+            <select id="exercise" [(ngModel)]="selectedExercise" class="form-select">
+              <option value="">Choose an exercise</option>
+              <option *ngFor="let exercise of exercisesForSelectedCategory" [value]="exercise.name">
+                {{ exercise.name }} ({{ exercise.difficulty }})
+              </option>
+            </select>
+          </div>
+
+          <!-- Exercise Details -->
+          <div class="exercise-details" *ngIf="selectedExerciseDetails">
+            <div class="detail-card">
+              <h4>{{ selectedExerciseDetails.name }}</h4>
+              <p>{{ selectedExerciseDetails.description }}</p>
+              <div class="detail-tags">
+                <span class="tag difficulty-{{ selectedExerciseDetails.difficulty.toLowerCase() }}">
+                  {{ selectedExerciseDetails.difficulty }}
+                </span>
+                <span class="tag equipment" *ngFor="let equip of selectedExerciseDetails.equipment">
+                  {{ equip }}
+                </span>
+              </div>
+              <div class="muscle-groups">
+                <span class="muscle-tag" *ngFor="let muscle of selectedExerciseDetails.muscleGroups">
+                  {{ muscle }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Button -->
+          <button 
+            class="add-btn" 
+            (click)="addExercise()"
+            [disabled]="!selectedExercise"
+          >
+            <span class="btn-icon">➕</span>
+            Add to {{ selectedDay }}
+          </button>
+        </div>
+
+        <!-- Current Day Plan -->
+        <div class="current-day-plan" *ngIf="hasExercisesForSelectedDay()">
+          <h3>{{ selectedDay }} Workout</h3>
+          <div class="day-info">
+            <span class="focus-tag">{{ getSelectedDayPlan()?.focus }}</span>
+            <span class="time-tag">⏱️ {{ getSelectedDayPlan()?.estimatedTime }}</span>
+          </div>
+          
+          <div class="exercise-list">
+            <div 
+              class="exercise-item" 
+              *ngFor="let exercise of getSelectedDayPlan()?.exercises || []"
+            >
+              <div class="exercise-info">
+                <h4>{{ exercise.name }}</h4>
+                <span class="difficulty-badge {{ exercise.difficulty.toLowerCase() }}">
+                  {{ exercise.difficulty }}
+                </span>
+              </div>
+              <button 
+                class="remove-btn" 
+                (click)="removeExercise(selectedDay, exercise.name)"
+                title="Remove exercise"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Templates Tab -->
+    <div class="tab-panel" *ngIf="activeTab === 'templates'">
+      <div class="templates-section">
+        <h3>Choose a Workout Template</h3>
+        <p class="templates-description">Start with a proven workout plan designed by fitness experts</p>
+        
+        <div class="templates-grid">
+          <div 
+            class="template-card" 
+            *ngFor="let template of planTemplates"
+            (click)="applyTemplate(template)"
+          >
+            <div class="template-icon">{{ template.icon }}</div>
+            <div class="template-content">
+              <h4>{{ template.name }}</h4>
+              <p>{{ template.description }}</p>
+              <div class="template-meta">
+                <span class="meta-item">
+                  <span class="meta-icon">📊</span>
+                  {{ template.difficulty }}
+                </span>
+                <span class="meta-item">
+                  <span class="meta-icon">⏱️</span>
+                  {{ template.duration }}
+                </span>
+              </div>
+              <div class="template-focus">
+                <span class="focus-pill" *ngFor="let focus of template.focus">
+                  {{ focus }}
+                </span>
+              </div>
+            </div>
+            <div class="template-arrow">→</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Plan Tab -->
+    <div class="tab-panel" *ngIf="activeTab === 'plan'">
+      <div class="plan-section">
+        <div class="plan-header">
+          <h3>Your Weekly Workout Plan</h3>
+          <div class="plan-actions">
+            <button class="action-btn secondary" (click)="clearPlan()">
+              <span class="btn-icon">🗑️</span>
+              Clear Plan
+            </button>
+            <button class="action-btn primary" (click)="downloadFullPlanAsPDF()">
+              <span class="btn-icon">📄</span>
+              Download PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="weekly-plan" *ngIf="hasAnyPlan(); else emptyPlan">
+          <div 
+            class="day-card" 
+            *ngFor="let day of daysOfWeek"
+            [class.has-exercises]="hasExercisesForDay(day)"
+          >
+            <div class="day-header">
+              <h4>{{ day }}</h4>
+              <div class="day-meta" *ngIf="hasExercisesForDay(day)">
+                <span class="focus-badge">{{ getDayPlan(day)?.focus }}</span>
+                <span class="time-badge">{{ getDayPlan(day)?.estimatedTime }}</span>
+              </div>
+            </div>
+            
+            <div class="day-exercises" *ngIf="hasExercisesForDay(day); else restDay">
+              <div 
+                class="day-exercise" 
+                *ngFor="let exercise of getDayPlan(day)?.exercises || []"
+              >
+                <div class="exercise-dot"></div>
+                <div class="exercise-details">
+                  <span class="exercise-name">{{ exercise.name }}</span>
+                  <span class="exercise-difficulty {{ exercise.difficulty.toLowerCase() }}">
+                    {{ exercise.difficulty }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <ng-template #restDay>
+              <div class="rest-day">
+                <span class="rest-icon">😴</span>
+                <span class="rest-text">Rest Day</span>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+
+        <ng-template #emptyPlan>
+          <div class="empty-plan">
+            <div class="empty-icon">📝</div>
+            <h4>No workout plan yet</h4>
+            <p>Start building your plan by adding exercises or choosing a template</p>
+            <button class="start-btn" (click)="activeTab = 'builder'">
+              Start Building
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,1 +1,139 @@
-<p>tracker works!</p>
+<div class="tracker-container">
+  <!-- Stats Dashboard -->
+  <div class="stats-dashboard">
+    <div class="stat-card level-card">
+      <div class="level-info">
+        <h2>Level {{ level }}</h2>
+        <div class="xp-info">
+          <span class="xp-text">{{ totalXP }} XP</span>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="getLevelProgress()"></div>
+          </div>
+          <span class="xp-needed">{{ xpForNextLevel - (totalXP - ((level - 1) * 100)) }} XP to next level</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card streak-card">
+      <h3>🔥 Current Streak</h3>
+      <div class="streak-number">{{ currentStreak }}</div>
+      <p>days</p>
+      <div class="longest-streak">Longest: {{ longestStreak }} days</div>
+    </div>
+
+    <div class="stat-card total-card">
+      <h3>💪 Total Workouts</h3>
+      <div class="total-number">{{ totalWorkouts }}</div>
+      <p>completed</p>
+    </div>
+  </div>
+
+  <!-- Workout Logging -->
+  <div class="tracker-card">
+    <h1>Log Today's Workout</h1>
+    <form (ngSubmit)="addLog()" class="log-form">
+      <div class="form-row">
+        <select [(ngModel)]="workoutType" name="workoutType" class="workout-type-select">
+          <option *ngFor="let type of workoutTypes" [value]="type.value">
+            {{ type.label }} (+{{ type.xp }} XP)
+          </option>
+        </select>
+      </div>
+      <div class="form-row">
+        <input
+          type="text"
+          [(ngModel)]="workoutNote"
+          name="workoutNote"
+          placeholder="What did you do today? (e.g. Chest day, 5km run...)"
+          maxlength="100"
+          required
+          class="workout-input"
+        />
+        <button type="submit" class="log-btn">Log Workout</button>
+      </div>
+    </form>
+
+    <!-- Recent Logs -->
+    <div class="logs-list" *ngIf="logs.length > 0">
+      <h2>Recent Workouts</h2>
+      <ul>
+        <li *ngFor="let log of logs; let i = index" class="log-item">
+          <div class="log-header">
+            <span class="log-date">{{ log.date }}</span>
+            <span class="log-xp">+{{ log.xp }} XP</span>
+          </div>
+          <div class="log-content">
+            <span class="log-note">{{ log.note }}</span>
+            <span class="log-type">{{ getWorkoutTypeLabel(log.type) }}</span>
+          </div>
+          <button class="delete-btn" (click)="deleteLog(i)" title="Delete">&times;</button>
+        </li>
+      </ul>
+    </div>
+    <div class="empty-state" *ngIf="logs.length === 0">
+      <p>No workouts logged yet. Start tracking your progress!</p>
+    </div>
+  </div>
+
+  <!-- Goals Section -->
+  <div class="goals-section">
+    <h2>🎯 Weekly Goals</h2>
+    <div class="goals-grid">
+      <div *ngFor="let goal of goals" class="goal-card">
+        <div class="goal-header">
+          <h3>{{ goal.name }}</h3>
+          <span class="goal-period">{{ goal.period }}</span>
+        </div>
+        <div class="goal-progress">
+          <div class="goal-numbers">
+            <span class="current">{{ goal.current }}</span>
+            <span class="separator">/</span>
+            <span class="target">{{ goal.target }}</span>
+          </div>
+          <div class="goal-bar">
+            <div class="goal-fill" [style.width.%]="getGoalProgress(goal.current, goal.target)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievements Section -->
+  <div class="achievements-section">
+    <h2>🏆 Achievements</h2>
+    
+    <!-- Unlocked Achievements -->
+    <div class="achievements-grid" *ngIf="getUnlockedAchievements().length > 0">
+      <h3>Unlocked</h3>
+      <div class="achievement-cards">
+        <div *ngFor="let achievement of getUnlockedAchievements()" class="achievement-card unlocked">
+          <div class="achievement-icon">{{ achievement.icon }}</div>
+          <div class="achievement-info">
+            <h4>{{ achievement.name }}</h4>
+            <p>{{ achievement.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Locked Achievements -->
+    <div class="achievements-grid">
+      <h3>Locked</h3>
+      <div class="achievement-cards">
+        <div *ngFor="let achievement of getLockedAchievements()" class="achievement-card locked">
+          <div class="achievement-icon">{{ achievement.icon }}</div>
+          <div class="achievement-info">
+            <h4>{{ achievement.name }}</h4>
+            <p>{{ achievement.description }}</p>
+            <div class="achievement-progress">
+              <span>{{ achievement.current }}/{{ achievement.requirement }}</span>
+              <div class="achievement-bar">
+                <div class="achievement-fill" [style.width.%]="getAchievementProgress(achievement.current, achievement.requirement)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

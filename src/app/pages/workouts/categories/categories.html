@@ -1,11 +1,91 @@
 <div class="categories-container">
   <h2>Workout Categories</h2>
-  <p>Select a muscle group to explore targeted exercises.</p>
+  <p>Select a muscle group to explore targeted exercises and learn with animated demos.</p>
 
   <div class="categories-grid">
-    <div class="category-card" *ngFor="let category of categories" (click)="goToCategory(category)">
+    <div 
+      class="category-card" 
+      *ngFor="let category of categories" 
+      [style.borderColor]="category.color"
+      (click)="toggleCategory(category.name)"
+      [class.expanded]="expandedCategory === category.name"
+    >
       <img [src]="category.image" [alt]="category.name" />
-      <h3>{{ category.name }}</h3>
+      <div class="category-info">
+        <span class="category-icon" [style.color]="category.color">{{ category.icon }}</span>
+        <h3>{{ category.name }}</h3>
+      </div>
+      <span class="expand-arrow" [class.open]="expandedCategory === category.name">▼</span>
+    </div>
+  </div>
+
+  <!-- Exercises Panel -->
+  <div class="exercises-panel" *ngFor="let category of categories">
+    <div 
+      class="exercises-list" 
+      *ngIf="expandedCategory === category.name"
+    >
+      <h4 class="exercises-title">{{ category.name }} Exercises</h4>
+      <div class="exercise-cards">
+        <div 
+          class="exercise-card" 
+          *ngFor="let exercise of category.exercises"
+          (click)="openExerciseModal(exercise)"
+        >
+          <div class="exercise-animation">
+            <div class="animation-icon" [style.background]="getCategoryColor(category.name)">
+              <span class="exercise-emoji">{{ getExerciseEmoji(exercise.name) }}</span>
+              <div class="exercise-form-hint">Click to see form</div>
+            </div>
+          </div>
+          <div class="exercise-info">
+            <h5>{{ exercise.name }}</h5>
+            <div class="exercise-meta">
+              <span class="difficulty" [ngClass]="getDifficultyClass(exercise.difficulty)">{{ exercise.difficulty }}</span>
+              <span class="equipment" *ngFor="let eq of exercise.equipment">{{ eq }}</span>
+            </div>
+            <div class="muscle-groups">
+              <span class="muscle-tag" *ngFor="let muscle of exercise.muscleGroups">{{ muscle }}</span>
+            </div>
+            <p class="exercise-desc">{{ exercise.description }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="learn-tip">Click an exercise to see a larger animation and step-by-step tips!</div>
+    </div>
+  </div>
+
+  <!-- Exercise Modal -->
+  <div class="exercise-modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+    <div class="exercise-modal" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeModal()">✕</button>
+      <div class="modal-animation">
+        <div class="animation-icon large" [style.background]="getCategoryColor(getSelectedCategoryName())" *ngIf="!hasGifAnimation(selectedExercise?.name || '')">
+          <span class="exercise-emoji">{{ getExerciseEmoji(selectedExercise?.name || '') }}</span>
+        </div>
+        <img [src]="getExerciseGif(selectedExercise?.name || '')" [alt]="selectedExercise?.name + ' animation'" *ngIf="hasGifAnimation(selectedExercise?.name || '')" class="gif-animation large" />
+      </div>
+      <div class="modal-info">
+        <h3>{{ selectedExercise?.name }}</h3>
+        <div class="exercise-meta">
+          <span class="difficulty" [ngClass]="selectedExercise ? getDifficultyClass(selectedExercise.difficulty) : ''">{{ selectedExercise?.difficulty }}</span>
+          <span class="equipment" *ngFor="let eq of selectedExercise?.equipment">{{ eq }}</span>
+        </div>
+        <div class="muscle-groups">
+          <span class="muscle-tag" *ngFor="let muscle of selectedExercise?.muscleGroups">{{ muscle }}</span>
+        </div>
+        <p class="exercise-desc">{{ selectedExercise?.description }}</p>
+        <div class="form-instructions">
+          <h4>How to perform:</h4>
+          <ul>
+            <li *ngFor="let instruction of getExerciseFormInstructions(selectedExercise?.name || '')">{{ instruction }}</li>
+          </ul>
+        </div>
+        <div class="modal-tip">Tip: Focus on proper form and controlled movements for best results!</div>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- Animations -->
+<!-- Add Angular animations in the component if not already present -->

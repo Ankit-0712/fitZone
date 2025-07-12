@@ -1,28 +1,164 @@
-<div class="home-container">
-  <div class="welcome-section">
-    <h1>Welcome to FitZone 🏋️‍♂️</h1>
-    <p>Your all-in-one fitness companion. Track workouts, monitor progress, and stay fit!</p>
-  </div>
+<div class="landing-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          <span class="gradient-text">FitZone</span>
+          <br>Your Personal Fitness Journey Starts Here
+        </h1>
+        <p class="hero-subtitle">
+          The ultimate fitness companion for beginners and enthusiasts alike. 
+          Track workouts, build plans, and achieve your fitness goals with confidence.
+        </p>
+        <div class="hero-buttons">
+          <button class="cta-button" (click)="navigateToLogin()">
+            <span>Get Started</span>
+            <i class="arrow-icon">→</i>
+          </button>
+          <button class="secondary-button" (click)="scrollToFeatures()">
+            Learn More
+          </button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-cards">
+          <div class="floating-card card-1">💪</div>
+          <div class="floating-card card-2">🏋️‍♂️</div>
+          <div class="floating-card card-3">📊</div>
+          <div class="floating-card card-4">🎯</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="card-grid">
-    <a routerLink="/categories" class="feature-card">
-      <h2>Workout Categories</h2>
-      <p>Explore various types of exercises by muscle group.</p>
-    </a>
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose FitZone?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Smart Workout Plans</h3>
+          <p>Create personalized workout routines tailored to your fitness level and goals</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Progress Tracking</h3>
+          <p>Monitor your fitness journey with detailed analytics and visual progress charts</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏋️‍♂️</div>
+          <h3>Exercise Library</h3>
+          <p>Access hundreds of exercises with step-by-step instructions and form guides</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏆</div>
+          <h3>Gamification</h3>
+          <p>Stay motivated with XP, levels, achievements, and streak tracking</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <a routerLink="/exercises" class="feature-card">
-      <h2>Exercise List</h2>
-      <p>View all available exercises with instructions.</p>
-    </a>
+  <!-- How It Works Section -->
+  <section class="how-it-works-section">
+    <div class="container">
+      <h2 class="section-title">How FitZone Works</h2>
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Sign Up & Set Goals</h3>
+            <p>Create your account and define your fitness objectives</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Explore Exercises</h3>
+            <p>Browse our comprehensive exercise library by muscle groups</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Build Your Plan</h3>
+            <p>Create custom workout routines that fit your schedule</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Track & Improve</h3>
+            <p>Log your workouts and watch your progress grow</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <a routerLink="/plan-builder" class="feature-card">
-      <h2>Plan Builder</h2>
-      <p>Create your custom workout plan with ease.</p>
-    </a>
+  <!-- Perfect for Beginners Section -->
+  <section class="beginners-section">
+    <div class="container">
+      <div class="beginners-content">
+        <div class="beginners-text">
+          <h2 class="section-title">Perfect for Gym Beginners</h2>
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <div class="benefit-icon">🤝</div>
+              <div class="benefit-text">
+                <h4>No Experience Required</h4>
+                <p>Start your fitness journey with confidence, even if you've never stepped foot in a gym</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">📚</div>
+              <div class="benefit-text">
+                <h4>Learn Proper Form</h4>
+                <p>Detailed exercise instructions and form guides to prevent injuries</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">🎯</div>
+              <div class="benefit-text">
+                <h4>Progressive Workouts</h4>
+                <p>Start simple and gradually increase difficulty as you get stronger</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">💪</div>
+              <div class="benefit-text">
+                <h4>Build Confidence</h4>
+                <p>Track your progress and celebrate every milestone on your fitness journey</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="beginners-visual">
+          <div class="confidence-illustration">
+            <div class="person-icon">🏃‍♂️</div>
+            <div class="progress-line"></div>
+            <div class="milestone milestone-1">💪</div>
+            <div class="milestone milestone-2">🏋️‍♂️</div>
+            <div class="milestone milestone-3">🏆</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <a routerLink="/tracker" class="feature-card">
-      <h2>Progress Tracker</h2>
-      <p>Track your fitness progress over time.</p>
-    </a>
-  </div>
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Transform Your Fitness Journey?</h2>
+        <p>Join thousands of users who have already achieved their fitness goals with FitZone</p>
+        <button class="cta-button-large" (click)="navigateToLogin()">
+          <span>Start Your Journey Today</span>
+          <i class="arrow-icon">→</i>
+        </button>
+      </div>
+    </div>
+  </section>
 </div>
