@@ -1,39 +1,63 @@
 <div class="categories-container">
-  <h2>Workout Categories</h2>
-  <p>Select a muscle group to explore targeted exercises and learn with animated demos.</p>
+  <!-- Header Section -->
+  <div class="header-section">
+    <h2>Workout Categories</h2>
+    <p>Select a muscle group to explore targeted exercises and learn with animated demos.</p>
+  </div>
 
-  <div class="categories-grid">
-    <div 
-      class="category-card" 
-      *ngFor="let category of categories" 
-      [style.borderColor]="category.color"
-      (click)="toggleCategory(category.name)"
-      [class.expanded]="expandedCategory === category.name"
-    >
-      <img [src]="category.image" [alt]="category.name" />
-      <div class="category-info">
-        <span class="category-icon" [style.color]="category.color">{{ category.icon }}</span>
-        <h3>{{ category.name }}</h3>
+  <!-- Categories Grid -->
+  <div class="categories-section" *ngIf="!selectedCategory">
+    <div class="categories-grid">
+      <div 
+        class="category-card" 
+        *ngFor="let category of categories" 
+        [style.borderColor]="category.color"
+        (click)="selectCategory(category)"
+      >
+        <img [src]="category.image" [alt]="category.name" />
+        <div class="category-info">
+          <span class="category-icon" [style.color]="category.color">{{ category.icon }}</span>
+          <h3>{{ category.name }}</h3>
+          <p class="exercise-count">{{ category.exercises.length }} exercises</p>
+        </div>
+        <div class="category-overlay">
+          <span class="explore-text">Explore</span>
+        </div>
       </div>
-      <span class="expand-arrow" [class.open]="expandedCategory === category.name">▼</span>
     </div>
   </div>
 
-  <!-- Exercises Panel -->
-  <div class="exercises-panel" *ngFor="let category of categories">
-    <div 
-      class="exercises-list" 
-      *ngIf="expandedCategory === category.name"
-    >
-      <h4 class="exercises-title">{{ category.name }} Exercises</h4>
-      <div class="exercise-cards">
+  <!-- Selected Category Section -->
+  <div class="selected-category-section" *ngIf="selectedCategory">
+    <!-- Back Navigation -->
+    <div class="back-navigation">
+      <button class="back-btn" (click)="goBack()">
+        <span class="back-icon">←</span>
+        Back to Categories
+      </button>
+    </div>
+
+    <!-- Category Header -->
+    <div class="category-header" [style.borderColor]="selectedCategory.color">
+      <div class="category-header-content">
+        <img [src]="selectedCategory.image" [alt]="selectedCategory.name" />
+        <div class="category-header-info">
+          <h2>{{ selectedCategory.name }} Workouts</h2>
+          <p>{{ selectedCategory.exercises.length }} exercises to strengthen your {{ selectedCategory.name.toLowerCase() }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exercises Grid -->
+    <div class="exercises-section">
+      <div class="exercises-grid">
         <div 
           class="exercise-card" 
-          *ngFor="let exercise of category.exercises"
+          *ngFor="let exercise of selectedCategory.exercises"
           (click)="openExerciseModal(exercise)"
         >
           <div class="exercise-animation">
-            <div class="animation-icon" [style.background]="getCategoryColor(category.name)">
+            <div class="animation-icon" [style.background]="selectedCategory.color">
               <span class="exercise-emoji">{{ getExerciseEmoji(exercise.name) }}</span>
               <div class="exercise-form-hint">Click to see form</div>
             </div>
@@ -49,9 +73,18 @@
             </div>
             <p class="exercise-desc">{{ exercise.description }}</p>
           </div>
+          <div class="exercise-action">
+            <span class="view-details">View Details</span>
+          </div>
         </div>
       </div>
-      <div class="learn-tip">Click an exercise to see a larger animation and step-by-step tips!</div>
+      
+      <div class="exercises-tip">
+        <div class="tip-content">
+          <span class="tip-icon">💡</span>
+          <p>Click any exercise to see detailed instructions and proper form guidance!</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -60,7 +93,7 @@
     <div class="exercise-modal" (click)="$event.stopPropagation()">
       <button class="close-btn" (click)="closeModal()">✕</button>
       <div class="modal-animation">
-        <div class="animation-icon large" [style.background]="getCategoryColor(getSelectedCategoryName())" *ngIf="!hasGifAnimation(selectedExercise?.name || '')">
+        <div class="animation-icon large" [style.background]="selectedCategory?.color" *ngIf="!hasGifAnimation(selectedExercise?.name || '')">
           <span class="exercise-emoji">{{ getExerciseEmoji(selectedExercise?.name || '') }}</span>
         </div>
         <img [src]="getExerciseGif(selectedExercise?.name || '')" [alt]="selectedExercise?.name + ' animation'" *ngIf="hasGifAnimation(selectedExercise?.name || '')" class="gif-animation large" />
@@ -86,6 +119,3 @@
     </div>
   </div>
 </div>
-
-<!-- Animations -->
-<!-- Add Angular animations in the component if not already present -->

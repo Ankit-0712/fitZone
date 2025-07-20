@@ -2,22 +2,29 @@
 
 import { Injectable } from '@angular/core';
 import {
-  getAuth,
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  UserCredential
+  UserCredential,
+  onAuthStateChanged,
+  User
 } from 'firebase/auth';
+import { Auth as FirebaseAuth } from '@angular/fire/auth';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private auth: Auth;
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor() {
-    this.auth = getAuth(); // ✅ Initializes Firebase Auth instance
+  constructor(private auth: FirebaseAuth) {
+    // Listen to auth state changes
+    onAuthStateChanged(this.auth, (user) => {
+      this.currentUserSubject.next(user);
+    });
   }
 
   /**
@@ -53,5 +60,12 @@ export class AuthService {
    */
   isLoggedIn(): boolean {
     return !!this.auth.currentUser;
+  }
+
+  /**
+   * Get current user as observable
+   */
+  getCurrentUserObservable(): Observable<User | null> {
+    return this.currentUser$;
   }
 }

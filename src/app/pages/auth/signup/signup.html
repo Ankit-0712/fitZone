@@ -1,1 +1,174 @@
-<p>signup works</p>
+<div class="auth-container">
+  <div class="auth-box">
+    <div class="auth-header">
+      <h1>Join FitZone</h1>
+      <p class="subtitle">Create your account and start your fitness journey</p>
+    </div>
+
+    <form (ngSubmit)="onSignup()" #signupForm="ngForm">
+      <div class="form-group">
+        <label for="displayName">Full Name</label>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="displayName"
+            name="displayName"
+            [(ngModel)]="displayName"
+            placeholder="Enter your full name"
+            required
+            (input)="clearError()"
+            [class.error]="errorMessage"
+          />
+          <span class="input-icon">👤</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-wrapper">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="Enter your email"
+            required
+            (input)="clearError()"
+            [class.error]="errorMessage"
+          />
+          <span class="input-icon">📧</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Create a password"
+            required
+            (input)="clearError()"
+            [class.error]="errorMessage"
+          />
+          <span class="input-icon">🔒</span>
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          >
+            {{ showPassword ? '👁️' : '👁️‍🗨️' }}
+          </button>
+        </div>
+        
+        <!-- Password Strength Indicator -->
+        <div class="password-strength" *ngIf="password">
+          <div class="strength-bar">
+            <div 
+              class="strength-fill" 
+              [style.width.%]="checkPasswordStrength() === 'weak' ? 25 : 
+                              checkPasswordStrength() === 'medium' ? 50 : 
+                              checkPasswordStrength() === 'strong' ? 75 : 100"
+              [style.background]="getPasswordStrengthColor()"
+            ></div>
+          </div>
+          <span class="strength-text" [style.color]="getPasswordStrengthColor()">
+            {{ checkPasswordStrength() === 'weak' ? 'Weak' : 
+               checkPasswordStrength() === 'medium' ? 'Medium' : 
+               checkPasswordStrength() === 'strong' ? 'Strong' : 'Very Strong' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="input-wrapper">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="Confirm your password"
+            required
+            (input)="clearError()"
+            [class.error]="errorMessage || (confirmPassword && password !== confirmPassword)"
+          />
+          <span class="input-icon">🔒</span>
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="toggleConfirmPasswordVisibility()"
+            [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'"
+          >
+            {{ showConfirmPassword ? '👁️' : '👁️‍🗨️' }}
+          </button>
+        </div>
+        
+        <!-- Password Match Indicator -->
+        <div class="password-match" *ngIf="confirmPassword">
+          <span class="match-icon" [class.matched]="password === confirmPassword">
+            {{ password === confirmPassword ? '✅' : '❌' }}
+          </span>
+          <span class="match-text" [class.matched]="password === confirmPassword">
+            {{ password === confirmPassword ? 'Passwords match' : 'Passwords do not match' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        <span class="error-icon">⚠️</span>
+        {{ errorMessage }}
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="isLoading"
+        [class.loading]="isLoading"
+      >
+        <span class="btn-content" *ngIf="!isLoading">
+          <span class="btn-icon">✨</span>
+          <span class="btn-text">Create Account</span>
+        </span>
+        <span class="loading-spinner" *ngIf="isLoading">
+          <div class="spinner"></div>
+          <span>Creating account...</span>
+        </span>
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p class="switch-text">
+        Already have an account?
+        <a (click)="navigateToLogin()" class="switch-link">Sign in here</a>
+      </p>
+    </div>
+
+    <div class="auth-divider">
+      <span>or</span>
+    </div>
+
+    <div class="social-auth">
+      <button class="social-btn google" type="button">
+        <span class="social-icon">🔍</span>
+        <span class="social-text">Continue with Google</span>
+      </button>
+      
+      <button class="social-btn facebook" type="button">
+        <span class="social-icon">📘</span>
+        <span class="social-text">Continue with Facebook</span>
+      </button>
+    </div>
+
+    <div class="terms-privacy">
+      <p class="terms-text">
+        By creating an account, you agree to our 
+        <a href="#" class="terms-link">Terms of Service</a> and 
+        <a href="#" class="terms-link">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+</div>

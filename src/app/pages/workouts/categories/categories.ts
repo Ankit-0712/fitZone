@@ -11,6 +11,14 @@ interface Exercise {
   muscleGroups: string[];
 }
 
+interface Category {
+  name: string;
+  image: string;
+  color: string;
+  icon: string;
+  exercises: Exercise[];
+}
+
 @Component({
   selector: 'app-categories',
   standalone: true,
@@ -19,17 +27,11 @@ interface Exercise {
   styleUrls: ['./categories.scss']
 })
 export class Categories {
-  expandedCategory: string | null = null;
+  selectedCategory: Category | null = null;
   selectedExercise: Exercise | null = null;
   showModal = false;
 
-  categories: Array<{
-    name: string;
-    image: string;
-    color: string;
-    icon: string;
-    exercises: Exercise[];
-  }> = [
+  categories: Category[] = [
     {
       name: 'Chest',
       image: 'https://via.placeholder.com/80x80/ef4444/ffffff?text=💪',
@@ -256,16 +258,32 @@ export class Categories {
     }
   ];
 
+  selectCategory(category: Category) {
+    console.log('Category selected:', category.name);
+    this.selectedCategory = category;
+  }
+
+  goBack() {
+    console.log('Going back to categories');
+    this.selectedCategory = null;
+  }
+
   toggleCategory(categoryName: string) {
-    this.expandedCategory = this.expandedCategory === categoryName ? null : categoryName;
+    // Keep this method for backward compatibility if needed
+    const category = this.categories.find(cat => cat.name === categoryName);
+    if (category) {
+      this.selectCategory(category);
+    }
   }
 
   openExerciseModal(exercise: Exercise) {
+    console.log('Opening exercise modal:', exercise.name);
     this.selectedExercise = exercise;
     this.showModal = true;
   }
 
   closeModal() {
+    console.log('Closing modal');
     this.showModal = false;
     this.selectedExercise = null;
   }
