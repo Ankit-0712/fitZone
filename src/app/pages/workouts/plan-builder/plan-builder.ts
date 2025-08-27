@@ -130,13 +130,14 @@ export class PlanBuilder {
     return this.workoutPlan[this.selectedDay]?.exercises?.length > 0;
   }
 
-  getSelectedDayPlan() {
-    return this.workoutPlan[this.selectedDay];
-  }
+ getSelectedDayPlan(): WorkoutDay | undefined {
+  return this.workoutPlan[this.selectedDay];
+}
 
-  getDayPlan(day: string) {
-    return this.workoutPlan[day];
-  }
+getDayPlan(day: string): WorkoutDay | undefined {
+  return this.workoutPlan[day];
+}
+
 
   addExercise(): void {
     if (!this.selectedDay || !this.selectedExercise) return;
