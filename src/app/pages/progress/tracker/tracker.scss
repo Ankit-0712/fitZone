@@ -523,6 +523,281 @@
   }
 }
 
+// Progress Charts Section
+.progress-charts-section {
+  max-width: 1000px;
+  margin: 0 auto 30px auto;
+  padding: 32px 24px;
+  background: #18181b;
+  border-radius: 18px;
+  border: 1px solid #27272a;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.08);
+
+  h2 {
+    color: #10b981;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.chart-card {
+  background: #232326;
+  border-radius: 14px;
+  padding: 20px 10px 10px 10px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.08);
+  border: 1px solid #27272a;
+  text-align: center;
+
+  h4 {
+    color: #34d399;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  canvas {
+    width: 100% !important;
+    max-width: 180px;
+    height: 120px !important;
+    margin: 0 auto;
+    display: block;
+    background: #18181b;
+    border-radius: 8px;
+  }
+}
+
+// Timer Section
+.timer-section {
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  background: #18181b;
+  border-radius: 16px;
+  border: 1px solid #27272a;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.08);
+  padding: 28px 20px;
+  text-align: center;
+
+  h2 {
+    color: #ef4444;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+
+  .timer-display {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #f87171;
+    margin-bottom: 18px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+  }
+
+  .timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+
+    button {
+      background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.12);
+
+      &:disabled {
+        background: #27272a;
+        color: #a1a1aa;
+        cursor: not-allowed;
+      }
+      &:hover:not(:disabled) {
+        background: #991b1b;
+      }
+    }
+  }
+}
+
+// BMI Calculator Section
+.bmi-section {
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  background: #18181b;
+  border-radius: 16px;
+  border: 1px solid #27272a;
+  box-shadow: 0 4px 16px rgba(52, 211, 153, 0.08);
+  padding: 28px 20px;
+  text-align: center;
+
+  h2 {
+    color: #10b981;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+
+  .bmi-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    input[type='number'] {
+      padding: 10px 14px;
+      border: 2px solid #27272a;
+      border-radius: 8px;
+      background: #232326;
+      color: #f3f4f6;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      box-sizing: border-box;
+
+      &:focus {
+        border-color: #10b981;
+      }
+    }
+
+    button {
+      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12);
+      margin-top: 4px;
+      &:hover {
+        background: #065f46;
+      }
+    }
+  }
+
+  .bmi-result {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #f3f4f6;
+    strong {
+      color: #10b981;
+    }
+    .bmi-category {
+      font-size: 1rem;
+      color: #f87171;
+      margin-top: 4px;
+    }
+  }
+}
+
+// Accordion Styles
+.accordion {
+  max-width: 1000px;
+  margin: 0 auto 30px auto;
+}
+
+.accordion-item {
+  background: #18181b;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(239, 68, 68, 0.07);
+  margin-bottom: 18px;
+  border: 1.5px solid #27272a;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 8px 32px rgba(239, 68, 68, 0.13);
+  }
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 22px 28px;
+  background: linear-gradient(90deg, #18181b 80%, #232326 100%);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  border-bottom: 1px solid #232326;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover, &:focus {
+    background: linear-gradient(90deg, #232326 80%, #18181b 100%);
+    color: #ef4444;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.accordion-icon {
+  font-size: 2rem;
+  color: #ef4444;
+  font-weight: 700;
+  margin-left: 18px;
+  transition: transform 0.2s, color 0.2s;
+  user-select: none;
+}
+
+.accordion-body {
+  padding: 0 28px 28px 28px;
+  animation: fadeInAccordion 0.3s;
+}
+
+@keyframes fadeInAccordion {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Remove extra padding from nested cards in accordion
+.accordion .tracker-card,
+.accordion .progress-charts-section,
+.accordion .timer-section,
+.accordion .bmi-section,
+.accordion .goals-section,
+.accordion .achievements-section {
+  margin: 0;
+  box-shadow: none;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+// Responsive Accordion
+@media (max-width: 768px) {
+  .accordion-header {
+    padding: 16px 12px;
+    font-size: 1.05rem;
+  }
+  .accordion-body {
+    padding: 0 8px 18px 8px;
+  }
+}
+
 // Responsive Design
 @media (max-width: 768px) {
   .tracker-container {
@@ -541,4 +816,26 @@
   .goals-grid {
     grid-template-columns: 1fr;
   }
+
+  .progress-charts-section {
+    padding: 16px 4px;
+  }
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .timer-section, .bmi-section {
+    padding: 16px 6px;
+  }
+}
+
+.lucide-icon {
+  width: 1.6em;
+  height: 1.6em;
+  margin-right: 12px;
+  vertical-align: middle;
+  stroke-width: 2.2;
+  color: #ef4444;
+  flex-shrink: 0;
+  display: inline-block;
 }

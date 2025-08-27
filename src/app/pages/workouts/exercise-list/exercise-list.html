@@ -1,1 +1,15 @@
-<p>exercise-list works!</p>
+<div class="exercise-list-container">
+  <h2>Exercises</h2>
+  <p>Click any exercise to see detailed information and proper form guidance.</p>
+  <ul class="exercise-list">
+    <li *ngFor="let exercise of exercises" (click)="selectExercise(exercise)" [class.selected]="selectedExercise === exercise">
+      {{ exercise.name }}
+    </li>
+  </ul>
+
+  <div *ngIf="selectedExercise" class="exercise-details">
+    <h3>{{ selectedExercise?.name }} Details</h3>
+    <p><strong>Description:</strong> {{ selectedExercise?.description }}</p>
+    <p><strong>Proper Form Guidance:</strong> {{ selectedExercise?.formGuidance }}</p>
+  </div>
+</div>

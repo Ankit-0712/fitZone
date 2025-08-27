@@ -202,12 +202,46 @@ export class PlanBuilder {
   calculateDayTime(day: WorkoutDay | { exercises: Exercise[] }): number {
     return day.exercises.reduce((total, exercise) => {
       if (exercise.duration) {
-        const timeStr = exercise.duration.replace(/\D/g, '');
-        return total + parseInt(timeStr) || 15;
+        const duration = exercise.duration.toLowerCase().trim();
+  
+        // Case: time range like "15-30 min"
+        const rangeMatch = duration.match(/(\d+)\s*-\s*(\d+)\s*min/);
+        if (rangeMatch) {
+          const min = parseInt(rangeMatch[1], 10);
+          const max = parseInt(rangeMatch[2], 10);
+          return total + Math.round((min + max) / 2);
+        }
+  
+        // Case: mm:ss or hh:mm:ss
+        if (/^\d{1,2}:\d{2}(:\d{2})?$/.test(duration)) {
+          const parts = duration.split(':').map(Number);
+          let minutes = 0;
+          if (parts.length === 3) {
+            minutes = parts[0] * 60 + parts[1] + Math.round(parts[2] / 60);
+          } else if (parts.length === 2) {
+            minutes = parts[0] + Math.round(parts[1] / 60);
+          }
+          return total + minutes;
+        }
+  
+        // Case: "30 min"
+        const minMatch = duration.match(/(\d+)\s*min/);
+        if (minMatch) {
+          return total + parseInt(minMatch[1], 10);
+        }
+  
+        // Case: plain number like "45"
+        const num = parseInt(duration.replace(/\D/g, ''), 10);
+        if (!isNaN(num)) {
+          return total + num;
+        }
       }
-      return total + 15; // Default 15 minutes per exercise
+  
+      // Default: 15 min if nothing matches
+      return total + 15;
     }, 0);
   }
+  
 
   updateDayTime(day: string): void {
     if (this.workoutPlan[day]) {

@@ -29,7 +29,7 @@ interface Category {
 export class Categories {
   selectedCategory: Category | null = null;
   selectedExercise: Exercise | null = null;
-  showModal = false;
+  // Removed showModal
 
   categories: Category[] = [
     {
@@ -41,7 +41,7 @@ export class Categories {
         {
           name: 'Push Ups',
           description: 'Classic bodyweight exercise for chest strength.',
-          animationUrl: 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
+          animationUrl: './assests/animations/PushUps.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Bodyweight'],
           muscleGroups: ['Chest', 'Triceps', 'Shoulders']
@@ -49,7 +49,7 @@ export class Categories {
         {
           name: 'Bench Press',
           description: 'Compound movement for chest development.',
-          animationUrl: 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
+          animationUrl: './assests/animations/BenchPress.gif',
           difficulty: 'Intermediate' as const,
           equipment: ['Barbell', 'Bench'],
           muscleGroups: ['Chest', 'Triceps', 'Shoulders']
@@ -57,7 +57,7 @@ export class Categories {
         {
           name: 'Chest Fly',
           description: 'Isolation exercise for chest muscles.',
-          animationUrl: 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
+          animationUrl: './assests/animations/DumbellFly.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Dumbbells'],
           muscleGroups: ['Chest']
@@ -73,7 +73,7 @@ export class Categories {
         {
           name: 'Pull Ups',
           description: 'Upper body pulling movement.',
-          animationUrl: 'https://via.placeholder.com/120x120/3b82f6/ffffff?text=🏋️‍♂️',
+          animationUrl: './assests/animations/PullUps.gif',
           difficulty: 'Advanced' as const,
           equipment: ['Pull-up Bar'],
           muscleGroups: ['Back', 'Biceps']
@@ -81,7 +81,7 @@ export class Categories {
         {
           name: 'Deadlifts',
           description: 'Full body compound exercise.',
-          animationUrl: 'https://via.placeholder.com/120x120/3b82f6/ffffff?text=🏋️‍♂️',
+          animationUrl: './assests/animations/DeadLift.gif',
           difficulty: 'Advanced' as const,
           equipment: ['Barbell'],
           muscleGroups: ['Back', 'Legs', 'Core']
@@ -89,7 +89,7 @@ export class Categories {
         {
           name: 'Seated Row',
           description: 'Machine-based back exercise.',
-          animationUrl: 'https://via.placeholder.com/120x120/3b82f6/ffffff?text=🏋️‍♂️',
+          animationUrl: './assests/animations/SeatedRowing.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Cable Machine'],
           muscleGroups: ['Back', 'Biceps']
@@ -105,7 +105,7 @@ export class Categories {
         {
           name: 'Squats',
           description: 'Fundamental lower body movement.',
-          animationUrl: 'https://via.placeholder.com/120x120/10b981/ffffff?text=🦵',
+          animationUrl: './assests/animations/Squat.gif',
           difficulty: 'Beginner',
           equipment: ['Bodyweight'],
           muscleGroups: ['Quadriceps', 'Glutes', 'Core']
@@ -113,7 +113,7 @@ export class Categories {
         {
           name: 'Lunges',
           description: 'Unilateral leg exercise.',
-          animationUrl: 'https://via.placeholder.com/120x120/10b981/ffffff?text=🦵',
+          animationUrl: './assests/animations/Lungegs.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Bodyweight'],
           muscleGroups: ['Quadriceps', 'Glutes', 'Hamstrings']
@@ -121,7 +121,7 @@ export class Categories {
         {
           name: 'Leg Press',
           description: 'Machine-based leg exercise.',
-          animationUrl: 'https://via.placeholder.com/120x120/10b981/ffffff?text=🦵',
+          animationUrl: './assests/animations/LegPress.gif',
           difficulty: 'Intermediate' as const,
           equipment: ['Leg Press Machine'],
           muscleGroups: ['Quadriceps', 'Glutes']
@@ -137,7 +137,7 @@ export class Categories {
         {
           name: 'Shoulder Press',
           description: 'Overhead pressing movement.',
-          animationUrl: 'https://via.placeholder.com/120x120/f59e0b/ffffff?text=🏐',
+          animationUrl: 'assests/animations/ShoulderPress.gif',
           difficulty: 'Intermediate' as const,
           equipment: ['Dumbbells'],
           muscleGroups: ['Shoulders', 'Triceps']
@@ -145,7 +145,7 @@ export class Categories {
         {
           name: 'Lateral Raise',
           description: 'Isolation for lateral deltoids.',
-          animationUrl: 'https://via.placeholder.com/120x120/f59e0b/ffffff?text=🏐',
+          animationUrl: 'assests/animations/LateralRaises.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Dumbbells'],
           muscleGroups: ['Shoulders']
@@ -153,7 +153,7 @@ export class Categories {
         {
           name: 'Front Raise',
           description: 'Isolation for anterior deltoids.',
-          animationUrl: 'https://via.placeholder.com/120x120/f59e0b/ffffff?text=🏐',
+          animationUrl: 'assests/animations/FrontRaises.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Dumbbells'],
           muscleGroups: ['Shoulders']
@@ -169,7 +169,7 @@ export class Categories {
         {
           name: 'Bicep Curl',
           description: 'Classic bicep isolation.',
-          animationUrl: 'https://via.placeholder.com/120x120/a21caf/ffffff?text=💪',
+          animationUrl: 'assests/animations/BicepCurls.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Dumbbells'],
           muscleGroups: ['Biceps']
@@ -177,7 +177,7 @@ export class Categories {
         {
           name: 'Triceps Dip',
           description: 'Bodyweight tricep exercise.',
-          animationUrl: 'https://via.placeholder.com/120x120/a21caf/ffffff?text=💪',
+          animationUrl: 'assests/animations/TricepDips.gif',
           difficulty: 'Intermediate' as const,
           equipment: ['Dip Bars'],
           muscleGroups: ['Triceps', 'Chest']
@@ -185,7 +185,7 @@ export class Categories {
         {
           name: 'Hammer Curl',
           description: 'Neutral grip curl variation.',
-          animationUrl: 'https://via.placeholder.com/120x120/a21caf/ffffff?text=💪',
+          animationUrl: 'assests/animations/HammerCurls.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Dumbbells'],
           muscleGroups: ['Biceps', 'Forearms']
@@ -201,7 +201,7 @@ export class Categories {
         {
           name: 'Plank',
           description: 'Core stability exercise.',
-          animationUrl: 'https://via.placeholder.com/120x120/f43f5e/ffffff?text=🧘',
+          animationUrl: 'assests/animations/Plank.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Bodyweight'],
           muscleGroups: ['Core']
@@ -209,7 +209,7 @@ export class Categories {
         {
           name: 'Crunches',
           description: 'Abdominal isolation exercise.',
-          animationUrl: 'https://via.placeholder.com/120x120/f43f5e/ffffff?text=🧘',
+          animationUrl: 'assests/animations/Crunches.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Bodyweight'],
           muscleGroups: ['Core']
@@ -217,7 +217,7 @@ export class Categories {
         {
           name: 'Russian Twist',
           description: 'Rotational core exercise.',
-          animationUrl: 'https://via.placeholder.com/120x120/f43f5e/ffffff?text=🧘',
+          animationUrl: 'assests/animations/RussinTwist.gif',
           difficulty: 'Intermediate' as const,
           equipment: ['Bodyweight'],
           muscleGroups: ['Core', 'Obliques']
@@ -233,7 +233,7 @@ export class Categories {
         {
           name: 'Running',
           description: 'High-intensity cardiovascular exercise.',
-          animationUrl: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif',
+          animationUrl: 'assests/animations/Running.gif',
           difficulty: 'Beginner' as const,
           equipment: ['None'],
           muscleGroups: ['Cardiovascular']
@@ -241,7 +241,7 @@ export class Categories {
         {
           name: 'Jump Rope',
           description: 'High-intensity cardio with coordination.',
-          animationUrl: 'https://via.placeholder.com/120x120/0ea5e9/ffffff?text=🏃',
+          animationUrl: 'assests/animations/JumppingRope.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Jump Rope'],
           muscleGroups: ['Cardiovascular', 'Calves']
@@ -249,7 +249,7 @@ export class Categories {
         {
           name: 'Cycling',
           description: 'Low-impact cardiovascular exercise.',
-          animationUrl: 'https://via.placeholder.com/120x120/0ea5e9/ffffff?text=🏃',
+          animationUrl: 'assests/animations/Cycling.gif',
           difficulty: 'Beginner' as const,
           equipment: ['Bicycle'],
           muscleGroups: ['Cardiovascular', 'Legs']
@@ -276,17 +276,29 @@ export class Categories {
     }
   }
 
-  openExerciseModal(exercise: Exercise) {
-    console.log('Opening exercise modal:', exercise.name);
+  openExerciseDetails(exercise: Exercise) {
     this.selectedExercise = exercise;
-    this.showModal = true;
   }
 
-  closeModal() {
-    console.log('Closing modal');
-    this.showModal = false;
+  closeExerciseModal() {
     this.selectedExercise = null;
   }
+
+  getTotalExercises(): number {
+    return this.categories.reduce((total, category) => total + category.exercises.length, 0);
+  }
+
+  getTotalMuscleGroups(): number {
+    const allMuscles = new Set<string>();
+    this.categories.forEach(category => {
+      category.exercises.forEach(exercise => {
+        exercise.muscleGroups.forEach(muscle => allMuscles.add(muscle));
+      });
+    });
+    return allMuscles.size;
+  }
+
+  // Removed openExerciseModal and closeModal
 
   getDifficultyClass(difficulty: 'Beginner' | 'Intermediate' | 'Advanced'): string {
     return difficulty.toLowerCase();
@@ -325,29 +337,29 @@ export class Categories {
   }
 
   getExerciseGif(exerciseName: string): string {
-    // Using reliable workout form GIFs from a different source
+    // Using local animation GIFs from public folder
     const gifMap: { [key: string]: string } = {
-      'Push Ups': 'https://cdn.kibrispdr.org/data/1793/push-up-animasi-3.gif',
-      'Bench Press': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Chest Fly': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Pull Ups': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Deadlifts': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Seated Row': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Squats': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Lunges': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Leg Press': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Shoulder Press': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Lateral Raise': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Front Raise': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Bicep Curl': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Triceps Dip': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Hammer Curl': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Plank': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Crunches': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Russian Twist': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Running': 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif',
-      'Jump Rope': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif',
-      'Cycling': 'https://media.giphy.com/media/3o7TKDEqX6VJWuOe6c/giphy.gif'
+      'Push Ups': 'animations/PushUps.gif',
+      'Bench Press': 'animations/BenchPress.gif',
+      'Chest Fly': 'animations/DumbellFly.gif',
+      'Pull Ups': 'animations/PullUps.gif',
+      'Deadlifts': 'animations/DeadLift.gif',
+      'Seated Row': 'animations/SeatedRowing.gif',
+      'Squats': 'animations/Squat.gif',
+      'Lunges': 'animations/Lungegs.gif',
+      'Leg Press': 'animations/LegPress.gif',
+      'Shoulder Press': 'animations/ShoulderPress.gif',
+      'Lateral Raise': 'animations/LateralRaises.gif',
+      'Front Raise': 'animations/FrontRaises.gif',
+      'Bicep Curl': 'animations/BicepCurls.gif',
+      'Triceps Dip': 'animations/TricepDips.gif',
+      'Hammer Curl': 'animations/HammerCurls.gif',
+      'Plank': 'animations/Plank.gif',
+      'Crunches': 'animations/Crunches.gif',
+      'Russian Twist': 'animations/RussinTwist.gif',
+      'Running': 'animations/Running.gif',
+      'Jump Rope': 'animations/JumppingRope.gif', 
+      'Cycling': 'animations/Cycling.gif'
     };
     return gifMap[exerciseName] || '';
   }
@@ -365,35 +377,131 @@ export class Categories {
   getExerciseFormInstructions(exerciseName: string): string[] {
     const formMap: { [key: string]: string[] } = {
       'Push Ups': [
-        '1. Start in a plank position with hands shoulder-width apart',
-        '2. Lower your body until chest nearly touches the floor',
-        '3. Keep your core tight and body in a straight line',
-        '4. Push back up to the starting position'
+        'Start in a plank position with hands shoulder-width apart',
+        'Lower your body until chest nearly touches the floor',
+        'Keep your core tight and body in a straight line',
+        'Push back up to the starting position'
       ],
       'Bench Press': [
-        '1. Lie on bench with feet flat on the ground',
-        '2. Grip barbell slightly wider than shoulder-width',
-        '3. Lower bar to chest with controlled movement',
-        '4. Press bar back up to starting position'
+        'Lie on bench with feet flat on the ground',
+        'Grip barbell slightly wider than shoulder-width',
+        'Lower bar to chest with controlled movement',
+        'Press bar back up to starting position'
       ],
       'Squats': [
-        '1. Stand with feet shoulder-width apart',
-        '2. Lower your body as if sitting back into a chair',
-        '3. Keep knees behind toes and chest up',
-        '4. Return to standing position'
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
       ],
       'Pull Ups': [
-        '1. Hang from pull-up bar with hands shoulder-width apart',
-        '2. Pull your body up until chin is over the bar',
-        '3. Lower your body back down with control',
-        '4. Repeat for desired number of reps'
+        'Hang from pull-up bar with hands shoulder-width apart',
+        'Pull your body up until chin is over the bar',
+        'Lower your body back down with control',
+        'Repeat for desired number of reps'
+      ],
+      'Deadlifts': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Seated Row': [
+        'Sit on a row machine with feet flat on the ground',
+        'Grip the handles with hands slightly wider than shoulder-width',
+        'Pull the handles towards your chest with controlled movement',
+        'Return to starting position'
+      ],
+      'Lunges': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Leg Press': [
+        'Sit on a leg press machine with feet flat on the ground',
+        'Grip the handles with hands slightly wider than shoulder-width',
+        'Press the handles away from your body with controlled movement',
+        'Return to starting position'
+        ],
+      'Shoulder Press': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Lateral Raise': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Front Raise': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Bicep Curl': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Triceps Dip': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Hammer Curl': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Plank': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Crunches': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Russian Twist': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Running': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Jump Rope': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
+      ],
+      'Cycling': [
+        'Stand with feet shoulder-width apart',
+        'Lower your body as if sitting back into a chair',
+        'Keep knees behind toes and chest up',
+        'Return to standing position'
       ]
-    };
+      };
     return formMap[exerciseName] || [
-      '1. Follow proper form for this exercise',
-      '2. Maintain controlled movements',
-      '3. Focus on the target muscle group',
-      '4. Breathe steadily throughout the movement'
+      'Follow proper form for this exercise',
+      'Maintain controlled movements',
+      'Focus on the target muscle group',
+      'Breathe steadily throughout the movement'
     ];
   }
 

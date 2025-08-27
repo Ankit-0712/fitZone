@@ -14,6 +14,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
 
 import { environment } from '../environments/environment';
+import { LucideAngularModule, LogIn, BarChart, Timer, Calculator, Target, Trophy, Home, User } from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [

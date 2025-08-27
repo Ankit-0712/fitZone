@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 
-// ✅ Your custom-named component files
+
 import { Home } from '../pages/home/home';
 import { Login } from '../pages/auth/login/login';
 import { Signup } from '../pages/auth/signup/signup';

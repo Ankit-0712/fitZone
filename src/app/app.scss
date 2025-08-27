@@ -1,1 +1,12 @@
-
+@media (max-width: 768px) {
+  html, body, app-root, .landing-page, .container, .hero-content, .features-grid, .steps-container, .beginners-content, section, router-outlet, main, .page-content {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+  }
+  html, body {
+    overflow-x: auto !important;
+  }
+}

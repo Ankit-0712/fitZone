@@ -3,100 +3,70 @@
     <!-- Logo Section -->
     <div class="logo-section">
       <div class="logo">
-        <span class="logo-icon">💪</span>
+        
         <span class="logo-text">FitZone</span>
       </div>
     </div>
 
-    <!-- Desktop Navigation -->
-    <div class="nav-links" [class.active]="isMobileMenuOpen">
-      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="onNavLinkClick()">
-        <span class="nav-icon">🏠</span>
-        <span class="nav-text">Home</span>
-      </a>
-      
-      <!-- Protected Routes - Only show when logged in -->
-      <ng-container *ngIf="isLoggedIn">
-        <a routerLink="/categories" routerLinkActive="active" class="nav-link" (click)="onNavLinkClick()">
-          <span class="nav-icon">🏋️‍♂️</span>
-          <span class="nav-text">Workouts</span>
+    <!-- Desktop Navigation Links (hidden on mobile) -->
+    <div class="nav-links-center desktop-only">
+      <div class="nav-links">
+        <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="onNavLinkClick()">
+          
+          <span class="nav-text">Home</span>
         </a>
-        <a routerLink="/plan-builder" routerLinkActive="active" class="nav-link" (click)="onNavLinkClick()">
-          <span class="nav-icon">📋</span>
-          <span class="nav-text">Plan Builder</span>
-        </a>
-        <a routerLink="/tracker" routerLinkActive="active" class="nav-link" (click)="onNavLinkClick()">
-          <span class="nav-icon">📊</span>
-          <span class="nav-text">Tracker</span>
-        </a>
-      </ng-container>
-      
-      <!-- Mobile Auth Buttons -->
-      <div class="mobile-auth-buttons" *ngIf="!isLoggedIn">
-        <button class="login-btn mobile-login" (click)="navigateToLogin()">
+        <ng-container *ngIf="isLoggedIn">
+          <a routerLink="/categories" routerLinkActive="active" class="nav-link" (click)="onNavLinkClick()">
+            
+            <span class="nav-text">Workouts</span>
+          </a>
+          <a routerLink="/plan-builder" routerLinkActive="active" class="nav-link" (click)="onNavLinkClick()">
+            
+            <span class="nav-text">Plan Builder</span>
+          </a>
+          <a routerLink="/tracker" routerLinkActive="active" class="nav-link" (click)="onNavLinkClick()">
+            
+            <span class="nav-text">Tracker</span>
+          </a>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Desktop Auth/Profile Section (hidden on mobile) -->
+    <div class="nav-auth-section desktop-only">
+      <div class="auth-buttons" *ngIf="!isLoggedIn">
+        <button class="login-btn" (click)="navigateToLogin()">
           <span class="btn-icon">🔐</span>
           <span class="btn-text">Login</span>
         </button>
-        <button class="signup-btn mobile-signup" (click)="navigateToSignup()">
+        <button class="signup-btn" (click)="navigateToSignup()">
           <span class="btn-icon">✨</span>
           <span class="btn-text">Sign Up</span>
         </button>
       </div>
-
-      <!-- Mobile Profile Section -->
-      <div class="mobile-profile-section" *ngIf="isLoggedIn">
-        <div class="mobile-user-info">
+      <div class="profile-section" *ngIf="isLoggedIn">
+        <div class="profile-toggle" (click)="toggleProfileDropdown($event)">
           <div class="user-avatar">
             <span class="avatar-text">{{ userName.charAt(0).toUpperCase() }}</span>
           </div>
-          <div class="user-details">
-            <span class="user-name">{{ userName }}</span>
-            <span class="user-email">{{ userEmail }}</span>
-          </div>
         </div>
-        <button class="logout-btn mobile-logout" (click)="logout()">
-          <span class="btn-icon">🚪</span>
-          <span class="btn-text">Logout</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Auth Buttons - Desktop -->
-    <div class="auth-buttons" *ngIf="!isLoggedIn">
-      <button class="login-btn" (click)="navigateToLogin()">
-        <span class="btn-icon">🔐</span>
-        <span class="btn-text">Login</span>
-      </button>
-      <button class="signup-btn" (click)="navigateToSignup()">
-        <span class="btn-icon">✨</span>
-        <span class="btn-text">Sign Up</span>
-      </button>
-    </div>
-
-    <!-- Profile Dropdown - Desktop -->
-    <div class="profile-section" *ngIf="isLoggedIn">
-      <div class="profile-toggle" (click)="toggleProfileDropdown($event)">
-        <div class="user-avatar">
-          <span class="avatar-text">{{ userName.charAt(0).toUpperCase() }}</span>
-        </div>
-      </div>
-      
-      <div class="profile-dropdown" [class.open]="isProfileDropdownOpen">
-        <div class="dropdown-header">
-          <div class="user-avatar large">
-            <span class="avatar-text">{{ userName.charAt(0).toUpperCase() }}</span>
+        <div class="profile-dropdown" [class.open]="isProfileDropdownOpen">
+          <div class="dropdown-header">
+            <div class="user-avatar large">
+              <span class="avatar-text">{{ userName.charAt(0).toUpperCase() }}</span>
+            </div>
+            <div class="user-info">
+              <span class="user-name">{{ userName }}</span>
+              <span class="user-email">{{ userEmail }}</span>
+            </div>
           </div>
-          <div class="user-info">
-            <span class="user-name">{{ userName }}</span>
-            <span class="user-email">{{ userEmail }}</span>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-menu">
+            <button class="dropdown-item" (click)="logout()">
+              <span class="item-icon">🚪</span>
+              <span class="item-text">Logout</span>
+            </button>
           </div>
-        </div>
-        <div class="dropdown-divider"></div>
-        <div class="dropdown-menu">
-          <button class="dropdown-item" (click)="logout()">
-            <span class="item-icon">🚪</span>
-            <span class="item-text">Logout</span>
-          </button>
         </div>
       </div>
     </div>
@@ -111,4 +81,55 @@
 
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" [class.active]="isMobileMenuOpen" (click)="closeMobileMenu()"></div>
+
+  <!-- Mobile Menu Content -->
+  <div class="mobile-menu" [class.active]="isMobileMenuOpen">
+    <div class="mobile-menu-content">
+      <div class="mobile-nav-links">
+        <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="closeMobileMenu()">
+          
+          <span class="nav-text">Home</span>
+        </a>
+        <ng-container *ngIf="isLoggedIn">
+          <a routerLink="/categories" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+            
+            <span class="nav-text">Workouts</span>
+          </a>
+          <a routerLink="/plan-builder" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+          
+            <span class="nav-text">Plan Builder</span>
+          </a>
+          <a routerLink="/tracker" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">
+            
+            <span class="nav-text">Tracker</span>
+          </a>
+        </ng-container>
+      </div>
+      <div class="mobile-auth-section" *ngIf="!isLoggedIn">
+        <button class="login-btn mobile-login" (click)="navigateToLogin(); closeMobileMenu()">
+          <span class="btn-icon">🔐</span>
+          <span class="btn-text">Login</span>
+        </button>
+        <button class="signup-btn mobile-signup" (click)="navigateToSignup(); closeMobileMenu()">
+          <span class="btn-icon">✨</span>
+          <span class="btn-text">Sign Up</span>
+        </button>
+      </div>
+      <div class="mobile-profile-section" *ngIf="isLoggedIn">
+        <div class="mobile-user-info">
+          <div class="user-avatar">
+            <span class="avatar-text">{{ userName.charAt(0).toUpperCase() }}</span>
+          </div>
+          <div class="user-details">
+            <span class="user-name">{{ userName }}</span>
+            <span class="user-email">{{ userEmail }}</span>
+          </div>
+        </div>
+        <button class="logout-btn mobile-logout" (click)="logout(); closeMobileMenu()">
+          <span class="btn-icon">🚪</span>
+          <span class="btn-text">Logout</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </nav>

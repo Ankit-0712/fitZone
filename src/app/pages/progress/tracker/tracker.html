@@ -28,107 +28,196 @@
     </div>
   </div>
 
-  <!-- Workout Logging -->
-  <div class="tracker-card">
-    <h1>Log Today's Workout</h1>
-    <form (ngSubmit)="addLog()" class="log-form">
-      <div class="form-row">
-        <select [(ngModel)]="workoutType" name="workoutType" class="workout-type-select">
-          <option *ngFor="let type of workoutTypes" [value]="type.value">
-            {{ type.label }} (+{{ type.xp }} XP)
-          </option>
-        </select>
+  <!-- Accordion Section Start -->
+  <div class="accordion">
+    <!-- Workout Logging (Open by default) -->
+    <div class="accordion-item">
+      <div class="accordion-header" (click)="toggleSection('log')">
+        <h2>Log Today's Workout</h2>
+        <span class="accordion-icon">{{ openSection === 'log' ? '−' : '+' }}</span>
       </div>
-      <div class="form-row">
-        <input
-          type="text"
-          [(ngModel)]="workoutNote"
-          name="workoutNote"
-          placeholder="What did you do today? (e.g. Chest day, 5km run...)"
-          maxlength="100"
-          required
-          class="workout-input"
-        />
-        <button type="submit" class="log-btn">Log Workout</button>
-      </div>
-    </form>
+      <div class="accordion-body" *ngIf="openSection === 'log'">
+        <div class="tracker-card">
+          <h1>Log Today's Workout</h1>
+          <form (ngSubmit)="addLog()" class="log-form">
+            <div class="form-row">
+              <select [(ngModel)]="workoutType" name="workoutType" class="workout-type-select">
+                <option *ngFor="let type of workoutTypes" [value]="type.value">
+                  {{ type.label }} (+{{ type.xp }} XP)
+                </option>
+              </select>
+            </div>
+            <div class="form-row">
+              <input
+                type="text"
+                [(ngModel)]="workoutNote"
+                name="workoutNote"
+                placeholder="What did you do today? (e.g. Chest day, 5km run...)"
+                maxlength="100"
+                required
+                class="workout-input"
+              />
+              <button type="submit" class="log-btn">Log Workout</button>
+            </div>
+          </form>
 
-    <!-- Recent Logs -->
-    <div class="logs-list" *ngIf="logs.length > 0">
-      <h2>Recent Workouts</h2>
-      <ul>
-        <li *ngFor="let log of logs; let i = index" class="log-item">
-          <div class="log-header">
-            <span class="log-date">{{ log.date }}</span>
-            <span class="log-xp">+{{ log.xp }} XP</span>
+          <!-- Recent Logs -->
+          <div class="logs-list" *ngIf="logs.length > 0">
+            <h2>Recent Workouts</h2>
+            <ul>
+              <li *ngFor="let log of logs; let i = index" class="log-item">
+                <div class="log-header">
+                  <span class="log-date">{{ log.date }}</span>
+                  <span class="log-xp">+{{ log.xp }} XP</span>
+                </div>
+                <div class="log-content">
+                  <span class="log-note">{{ log.note }}</span>
+                  <span class="log-type">{{ getWorkoutTypeLabel(log.type) }}</span>
+                </div>
+                <button class="delete-btn" (click)="deleteLog(i)" title="Delete">&times;</button>
+              </li>
+            </ul>
           </div>
-          <div class="log-content">
-            <span class="log-note">{{ log.note }}</span>
-            <span class="log-type">{{ getWorkoutTypeLabel(log.type) }}</span>
-          </div>
-          <button class="delete-btn" (click)="deleteLog(i)" title="Delete">&times;</button>
-        </li>
-      </ul>
-    </div>
-    <div class="empty-state" *ngIf="logs.length === 0">
-      <p>No workouts logged yet. Start tracking your progress!</p>
-    </div>
-  </div>
-
-  <!-- Goals Section -->
-  <div class="goals-section">
-    <h2>🎯 Weekly Goals</h2>
-    <div class="goals-grid">
-      <div *ngFor="let goal of goals" class="goal-card">
-        <div class="goal-header">
-          <h3>{{ goal.name }}</h3>
-          <span class="goal-period">{{ goal.period }}</span>
-        </div>
-        <div class="goal-progress">
-          <div class="goal-numbers">
-            <span class="current">{{ goal.current }}</span>
-            <span class="separator">/</span>
-            <span class="target">{{ goal.target }}</span>
-          </div>
-          <div class="goal-bar">
-            <div class="goal-fill" [style.width.%]="getGoalProgress(goal.current, goal.target)"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Achievements Section -->
-  <div class="achievements-section">
-    <h2>🏆 Achievements</h2>
-    
-    <!-- Unlocked Achievements -->
-    <div class="achievements-grid" *ngIf="getUnlockedAchievements().length > 0">
-      <h3>Unlocked</h3>
-      <div class="achievement-cards">
-        <div *ngFor="let achievement of getUnlockedAchievements()" class="achievement-card unlocked">
-          <div class="achievement-icon">{{ achievement.icon }}</div>
-          <div class="achievement-info">
-            <h4>{{ achievement.name }}</h4>
-            <p>{{ achievement.description }}</p>
+          <div class="empty-state" *ngIf="logs.length === 0">
+            <p>No workouts logged yet. Start tracking your progress!</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Locked Achievements -->
-    <div class="achievements-grid">
-      <h3>Locked</h3>
-      <div class="achievement-cards">
-        <div *ngFor="let achievement of getLockedAchievements()" class="achievement-card locked">
-          <div class="achievement-icon">{{ achievement.icon }}</div>
-          <div class="achievement-info">
-            <h4>{{ achievement.name }}</h4>
-            <p>{{ achievement.description }}</p>
-            <div class="achievement-progress">
-              <span>{{ achievement.current }}/{{ achievement.requirement }}</span>
-              <div class="achievement-bar">
-                <div class="achievement-fill" [style.width.%]="getAchievementProgress(achievement.current, achievement.requirement)"></div>
+    <!-- Progress Charts -->
+    <div class="accordion-item">
+      <div class="accordion-header" (click)="toggleSection('charts')">
+        <h2>Progress Charts</h2>
+        <span class="accordion-icon">{{ openSection === 'charts' ? '−' : '+' }}</span>
+      </div>
+      <div class="accordion-body" *ngIf="openSection === 'charts'">
+        <div class="progress-charts-section">
+          <h2>📈 Progress Charts</h2>
+          <div class="charts-grid">
+            <div class="chart-card">
+              <h4>Calories Burned</h4>
+              <canvas id="caloriesChart"></canvas> <!-- Chart.js/ngx-charts placeholder -->
+            </div>
+            <div class="chart-card">
+              <h4>Workout Time</h4>
+              <canvas id="workoutTimeChart"></canvas>
+            </div>
+            <div class="chart-card">
+              <h4>Streaks</h4>
+              <canvas id="streaksChart"></canvas>
+            </div>
+            <div class="chart-card">
+              <h4>Weight Lifted</h4>
+              <canvas id="weightLiftedChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timer & BMI Calculator (Grouped as Tools) -->
+    <div class="accordion-item">
+      <div class="accordion-header" (click)="toggleSection('tools')">
+        <h2>Tools (Timer & BMI Calculator)</h2>
+        <span class="accordion-icon">{{ openSection === 'tools' ? '−' : '+' }}</span>
+      </div>
+      <div class="accordion-body" *ngIf="openSection === 'tools'">
+        <div class="timer-section">
+          <h2>⏱️ Workout Timer</h2>
+          <div class="timer-display">{{ timerDisplay }}</div>
+          <div class="timer-controls">
+            <button (click)="startTimer()" [disabled]="timerRunning">Start</button>
+            <button (click)="pauseTimer()" [disabled]="!timerRunning">Pause</button>
+            <button (click)="resetTimer()">Reset</button>
+          </div>
+        </div>
+        <div class="bmi-section">
+          <h2>🧮 BMI Calculator</h2>
+          <form (ngSubmit)="calculateBMI()" class="bmi-form">
+            <input type="number" [(ngModel)]="bmiWeight" name="bmiWeight" placeholder="Weight (kg)" required min="1" />
+            <input type="number" [(ngModel)]="bmiHeight" name="bmiHeight" placeholder="Height (cm)" required min="1" />
+            <button type="submit">Calculate</button>
+          </form>
+          <div class="bmi-result" *ngIf="bmiResult">
+            <p>Your BMI: <strong>{{ bmiResult }}</strong></p>
+            <p class="bmi-category">{{ bmiCategory }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Goals Section -->
+    <div class="accordion-item">
+      <div class="accordion-header" (click)="toggleSection('goals')">
+        <h2>Weekly Goals</h2>
+        <span class="accordion-icon">{{ openSection === 'goals' ? '−' : '+' }}</span>
+      </div>
+      <div class="accordion-body" *ngIf="openSection === 'goals'">
+        <div class="goals-section">
+          <h2>🎯 Weekly Goals</h2>
+          <div class="goals-grid">
+            <div *ngFor="let goal of goals" class="goal-card">
+              <div class="goal-header">
+                <h3>{{ goal.name }}</h3>
+                <span class="goal-period">{{ goal.period }}</span>
+              </div>
+              <div class="goal-progress">
+                <div class="goal-numbers">
+                  <span class="current">{{ goal.current }}</span>
+                  <span class="separator">/</span>
+                  <span class="target">{{ goal.target }}</span>
+                </div>
+                <div class="goal-bar">
+                  <div class="goal-fill" [style.width.%]="getGoalProgress(goal.current, goal.target)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Section -->
+    <div class="accordion-item">
+      <div class="accordion-header" (click)="toggleSection('achievements')">
+        <h2>Achievements</h2>
+        <span class="accordion-icon">{{ openSection === 'achievements' ? '−' : '+' }}</span>
+      </div>
+      <div class="accordion-body" *ngIf="openSection === 'achievements'">
+        <div class="achievements-section">
+          <h2>🏆 Achievements</h2>
+          
+          <!-- Unlocked Achievements -->
+          <div class="achievements-grid" *ngIf="getUnlockedAchievements().length > 0">
+            <h3>Unlocked</h3>
+            <div class="achievement-cards">
+              <div *ngFor="let achievement of getUnlockedAchievements()" class="achievement-card unlocked">
+                <div class="achievement-icon">{{ achievement.icon }}</div>
+                <div class="achievement-info">
+                  <h4>{{ achievement.name }}</h4>
+                  <p>{{ achievement.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Locked Achievements -->
+          <div class="achievements-grid">
+            <h3>Locked</h3>
+            <div class="achievement-cards">
+              <div *ngFor="let achievement of getLockedAchievements()" class="achievement-card locked">
+                <div class="achievement-icon">{{ achievement.icon }}</div>
+                <div class="achievement-info">
+                  <h4>{{ achievement.name }}</h4>
+                  <p>{{ achievement.description }}</p>
+                  <div class="achievement-progress">
+                    <span>{{ achievement.current }}/{{ achievement.requirement }}</span>
+                    <div class="achievement-bar">
+                      <div class="achievement-fill" [style.width.%]="getAchievementProgress(achievement.current, achievement.requirement)"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -136,4 +225,5 @@
       </div>
     </div>
   </div>
+  <!-- Accordion Section End -->
 </div>

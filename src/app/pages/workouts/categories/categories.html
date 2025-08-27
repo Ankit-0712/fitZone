@@ -14,14 +14,48 @@
         [style.borderColor]="category.color"
         (click)="selectCategory(category)"
       >
-        <img [src]="category.image" [alt]="category.name" />
         <div class="category-info">
-          <span class="category-icon" [style.color]="category.color">{{ category.icon }}</span>
           <h3>{{ category.name }}</h3>
           <p class="exercise-count">{{ category.exercises.length }} exercises</p>
         </div>
         <div class="category-overlay">
           <span class="explore-text">Explore</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Additional content to fill space -->
+    <div class="categories-stats">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">{{ getTotalExercises() }}</div>
+          <div class="stat-label">Total Exercises</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">{{ categories.length }}</div>
+          <div class="stat-label">Workout Categories</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">{{ getTotalMuscleGroups() }}</div>
+          <div class="stat-label">Muscle Groups</div>
+        </div>
+      </div>
+      
+      <div class="workout-tips">
+        <h3>💪 Fitness Tips</h3>
+        <div class="tips-grid">
+          <div class="tip-card">
+            <h4>Consistency is Key</h4>
+            <p>Regular workouts are more effective than occasional intense sessions.</p>
+          </div>
+          <div class="tip-card">
+            <h4>Proper Form First</h4>
+            <p>Focus on correct technique before increasing weight or reps.</p>
+          </div>
+          <div class="tip-card">
+            <h4>Rest & Recovery</h4>
+            <p>Give your muscles time to repair and grow stronger.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -40,7 +74,6 @@
     <!-- Category Header -->
     <div class="category-header" [style.borderColor]="selectedCategory.color">
       <div class="category-header-content">
-        <img [src]="selectedCategory.image" [alt]="selectedCategory.name" />
         <div class="category-header-info">
           <h2>{{ selectedCategory.name }} Workouts</h2>
           <p>{{ selectedCategory.exercises.length }} exercises to strengthen your {{ selectedCategory.name.toLowerCase() }}</p>
@@ -54,14 +87,10 @@
         <div 
           class="exercise-card" 
           *ngFor="let exercise of selectedCategory.exercises"
-          (click)="openExerciseModal(exercise)"
+          (click)="openExerciseDetails(exercise)"
+          [class.expanded]="selectedExercise === exercise"
         >
-          <div class="exercise-animation">
-            <div class="animation-icon" [style.background]="selectedCategory.color">
-              <span class="exercise-emoji">{{ getExerciseEmoji(exercise.name) }}</span>
-              <div class="exercise-form-hint">Click to see form</div>
-            </div>
-          </div>
+
           <div class="exercise-info">
             <h5>{{ exercise.name }}</h5>
             <div class="exercise-meta">
@@ -76,45 +105,73 @@
           <div class="exercise-action">
             <span class="view-details">View Details</span>
           </div>
+
+
         </div>
       </div>
       
       <div class="exercises-tip">
         <div class="tip-content">
-          <span class="tip-icon">💡</span>
           <p>Click any exercise to see detailed instructions and proper form guidance!</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Exercise Modal -->
-  <div class="exercise-modal-backdrop" *ngIf="showModal" (click)="closeModal()">
-    <div class="exercise-modal" (click)="$event.stopPropagation()">
-      <button class="close-btn" (click)="closeModal()">✕</button>
-      <div class="modal-animation">
-        <div class="animation-icon large" [style.background]="selectedCategory?.color" *ngIf="!hasGifAnimation(selectedExercise?.name || '')">
-          <span class="exercise-emoji">{{ getExerciseEmoji(selectedExercise?.name || '') }}</span>
-        </div>
-        <img [src]="getExerciseGif(selectedExercise?.name || '')" [alt]="selectedExercise?.name + ' animation'" *ngIf="hasGifAnimation(selectedExercise?.name || '')" class="gif-animation large" />
-      </div>
-      <div class="modal-info">
-        <h3>{{ selectedExercise?.name }}</h3>
+  <!-- Exercise Modal Popup -->
+  <div class="exercise-modal" *ngIf="selectedExercise" (click)="closeExerciseModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close-btn" (click)="closeExerciseModal()">✕</button>
+      
+      <div class="modal-header">
+        <h2>{{ selectedExercise.name }}</h2>
         <div class="exercise-meta">
-          <span class="difficulty" [ngClass]="selectedExercise ? getDifficultyClass(selectedExercise.difficulty) : ''">{{ selectedExercise?.difficulty }}</span>
-          <span class="equipment" *ngFor="let eq of selectedExercise?.equipment">{{ eq }}</span>
+          <span class="difficulty" [ngClass]="getDifficultyClass(selectedExercise.difficulty)">
+            {{ selectedExercise.difficulty }}
+          </span>
+          <span class="equipment" *ngFor="let eq of selectedExercise.equipment">
+            {{ eq }}
+          </span>
         </div>
-        <div class="muscle-groups">
-          <span class="muscle-tag" *ngFor="let muscle of selectedExercise?.muscleGroups">{{ muscle }}</span>
+      </div>
+
+      <div class="modal-body">
+        <div class="exercise-animation-container">
+          <img 
+            [src]="getExerciseGif(selectedExercise.name)" 
+            [alt]="selectedExercise.name + ' animation'" 
+            class="exercise-gif"
+            *ngIf="hasGifAnimation(selectedExercise.name)"
+          />
+          <div class="no-animation-placeholder" *ngIf="!hasGifAnimation(selectedExercise.name)">
+            <span>No animation available</span>
+          </div>
         </div>
-        <p class="exercise-desc">{{ selectedExercise?.description }}</p>
-        <div class="form-instructions">
-          <h4>How to perform:</h4>
-          <ul>
-            <li *ngFor="let instruction of getExerciseFormInstructions(selectedExercise?.name || '')">{{ instruction }}</li>
-          </ul>
+
+        <div class="exercise-details">
+          <div class="muscle-groups">
+            <h4>Target Muscles:</h4>
+            <div class="muscle-tags">
+              <span class="muscle-tag" *ngFor="let muscle of selectedExercise.muscleGroups">
+                {{ muscle }}
+              </span>
+            </div>
+          </div>
+
+          <div class="exercise-description">
+            <h4>Description:</h4>
+            <p>{{ selectedExercise.description }}</p>
+          </div>
+
+          <div class="form-instructions" *ngIf="getExerciseFormInstructions(selectedExercise.name).length > 0">
+            <h4>How to perform:</h4>
+            <ol>
+              <li *ngFor="let instruction of getExerciseFormInstructions(selectedExercise.name)">
+                {{ instruction }}
+              </li>
+            </ol>
+          </div>
         </div>
-        <div class="modal-tip">Tip: Focus on proper form and controlled movements for best results!</div>
       </div>
     </div>
   </div>

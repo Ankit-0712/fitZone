@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -33,7 +33,8 @@ interface Goal {
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './tracker.html',
-  styleUrl: './tracker.scss'
+  styleUrl: './tracker.scss',
+  providers: [],
 })
 export class Tracker implements OnInit {
   workoutNote = '';
@@ -79,9 +80,31 @@ export class Tracker implements OnInit {
     { id: 'monthly_streak', name: 'Monthly Streak Goal', target: 15, current: 0, period: 'monthly', type: 'streak' }
   ];
 
+  // --- Timer ---
+  timerDisplay: string = '00:00:00';
+  timerRunning: boolean = false;
+  private timerInterval: any = null;
+  private timerSeconds: number = 0;
+
+  // --- BMI Calculator ---
+  bmiWeight: number | null = null;
+  bmiHeight: number | null = null;
+  bmiResult: string = '';
+  bmiCategory: string = '';
+
+  // Accordion state
+  openSection: string = 'log';
+
+  constructor(private ngZone: NgZone) {} 
+
+  toggleSection(section: string) {
+    this.openSection = this.openSection === section ? '' : section;
+  }
+
   ngOnInit() {
     this.loadData();
     this.updateStats();
+    this.updateTimerDisplay();
   }
 
   addLog() {
@@ -239,6 +262,64 @@ export class Tracker implements OnInit {
 
   getAchievementProgress(current: number, requirement: number): number {
     return Math.min(100, (current / requirement) * 100);
+  }
+
+  // --- Timer Methods ---
+  startTimer() {
+    if (this.timerRunning) return;
+    this.timerRunning = true;
+    this.ngZone.runOutsideAngular(() => {
+      this.timerInterval = setInterval(() => {
+        this.timerSeconds++;
+        this.ngZone.run(() => {
+          this.updateTimerDisplay(); // ✅ forces Angular to refresh the view
+        });
+      }, 1000);
+    });
+  }
+
+  pauseTimer() {
+    if (!this.timerRunning) return;
+    this.timerRunning = false;
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+  }
+
+  resetTimer() {
+    this.pauseTimer();
+    this.timerSeconds = 0;
+    this.updateTimerDisplay();
+  }
+
+  private updateTimerDisplay() {
+    const hours = Math.floor(this.timerSeconds / 3600);
+    const minutes = Math.floor((this.timerSeconds % 3600) / 60);
+    const seconds = this.timerSeconds % 60;
+    this.timerDisplay = [hours, minutes, seconds]
+      .map(unit => unit.toString().padStart(2, '0'))
+      .join(':');
+  }
+  // --- BMI Calculator ---
+  calculateBMI() {
+    if (!this.bmiWeight || !this.bmiHeight) {
+      this.bmiResult = '';
+      this.bmiCategory = '';
+      return;
+    }
+    const heightM = this.bmiHeight / 100;
+    const bmi = this.bmiWeight / (heightM * heightM);
+    this.bmiResult = bmi.toFixed(1);
+    if (bmi < 18.5) {
+      this.bmiCategory = 'Underweight';
+    } else if (bmi < 25) {
+      this.bmiCategory = 'Normal weight';
+    } else if (bmi < 30) {
+      this.bmiCategory = 'Overweight';
+    } else {
+      this.bmiCategory = 'Obese';
+    }
   }
 
   private saveData() {
