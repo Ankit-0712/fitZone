@@ -640,6 +640,11 @@
   box-shadow: 0 4px 16px rgba(52, 211, 153, 0.08);
   padding: 28px 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 
   h2 {
     color: #10b981;
@@ -653,6 +658,8 @@
     flex-direction: column;
     gap: 12px;
     margin-bottom: 16px;
+    width: 100%;
+    max-width: 300px;
 
     input[type='number'] {
       padding: 10px 14px;
@@ -683,6 +690,7 @@
       transition: all 0.2s;
       box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12);
       margin-top: 4px;
+      width: 100%;
       &:hover {
         background: #065f46;
       }
@@ -787,6 +795,15 @@
   padding-right: 0;
 }
 
+// Special centering for BMI section in accordion
+.accordion .bmi-section {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 // Responsive Accordion
 @media (max-width: 768px) {
   .accordion-header {
@@ -838,4 +855,298 @@
   color: #ef4444;
   flex-shrink: 0;
   display: inline-block;
+}
+
+// Meal Planning Styles
+.meal-planning-section {
+  max-width: 1000px;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+    color: #ef4444;
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+
+  .user-details-form {
+    background: #18181b;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+    border: 1px solid #27272a;
+
+    h3 {
+      color: #f3f4f6;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          color: #a1a1aa;
+          margin-bottom: 8px;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+
+        input, select {
+          background: #27272a;
+          border: 1px solid #3f3f46;
+          border-radius: 8px;
+          padding: 12px;
+          color: #f3f4f6;
+          font-size: 1rem;
+          transition: border-color 0.3s ease;
+
+          &:focus {
+            outline: none;
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+          }
+
+          &::placeholder {
+            color: #71717a;
+          }
+        }
+      }
+    }
+
+    .generate-btn {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      display: block;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+      .meal-plan-display {
+      .meal-plan-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 16px;
+
+        h3 {
+          color: #f3f4f6;
+          font-size: 1.8rem;
+          margin: 0;
+        }
+
+        .regenerate-btn {
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          padding: 10px 16px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+          }
+        }
+      }
+
+    .meal-card {
+      background: #18181b;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid #27272a;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      h4 {
+        color: #ef4444;
+        margin-bottom: 16px;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .food-items {
+        margin-bottom: 16px;
+
+        .food-item {
+          display: grid;
+          grid-template-columns: 1fr 1fr 2fr;
+          gap: 16px;
+          padding: 12px;
+          background: #27272a;
+          border-radius: 8px;
+          margin-bottom: 8px;
+          align-items: center;
+
+          .food-name {
+            font-weight: 600;
+            color: #f3f4f6;
+          }
+
+          .food-portion {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+          }
+
+          .food-macros {
+            color: #d4d4d8;
+            font-size: 0.85rem;
+            text-align: right;
+          }
+        }
+      }
+
+      .meal-totals {
+        background: #1f1f23;
+        padding: 12px 16px;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid #3f3f46;
+
+        strong {
+          color: #fbbf24;
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .daily-summary {
+      background: linear-gradient(135deg, #18181b 0%, #1f1f23 100%);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 2px solid #ef4444;
+
+      h4 {
+        color: #ef4444;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+
+        .summary-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 12px;
+          background: #27272a;
+          border-radius: 8px;
+          border: 1px solid #3f3f46;
+
+          .summary-label {
+            color: #a1a1aa;
+            font-weight: 500;
+          }
+
+          .summary-value {
+            color: #fbbf24;
+            font-weight: 700;
+            font-size: 1.1rem;
+          }
+        }
+      }
+    }
+
+    .health-tip {
+      background: linear-gradient(135deg, #18181b 0%, #1f1f23 100%);
+      border-radius: 16px;
+      padding: 24px;
+      border: 2px solid #10b981;
+      text-align: center;
+
+      h4 {
+        color: #10b981;
+        margin-bottom: 16px;
+        font-size: 1.3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      p {
+        color: #d1fae5;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin: 0;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+// Responsive adjustments for meal planning
+@media (max-width: 768px) {
+  .meal-planning-section {
+    .user-details-form {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .meal-plan-display {
+      .meal-card {
+        .food-items {
+          .food-item {
+            grid-template-columns: 1fr;
+            gap: 8px;
+            text-align: center;
+
+            .food-macros {
+              text-align: center;
+            }
+          }
+        }
+      }
+
+      .daily-summary {
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+  }
 }

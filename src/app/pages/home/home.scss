@@ -448,69 +448,54 @@ section {
   }
 }
 
-// Confidence illustration
+// Additional benefits visual
 .beginners-visual {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.confidence-illustration {
-  position: relative;
-  width: 300px;
-  height: 200px;
+.additional-benefits {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 350px;
 }
 
-.person-icon {
-  font-size: 3rem;
-  animation: run 2s ease-in-out infinite;
-}
+.benefit-card {
+  background: rgba(31, 31, 31, 0.8);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 15px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
 
-.progress-line {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #ef4444, #f97316, #eab308);
-  border-radius: 2px;
-  transform: translateY(-50%);
-}
-
-.milestone {
-  position: absolute;
-  top: 50%;
-  font-size: 1.5rem;
-  transform: translateY(-50%);
-  animation: pulse 2s ease-in-out infinite;
-
-  &.milestone-1 {
-    left: 20%;
-    animation-delay: 0s;
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba(239, 68, 68, 0.4);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.2);
   }
 
-  &.milestone-2 {
-    left: 50%;
-    animation-delay: 0.7s;
+  .benefit-icon-large {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
   }
 
-  &.milestone-3 {
-    left: 80%;
-    animation-delay: 1.4s;
+  h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: #f3f4f6;
   }
-}
 
-@keyframes run {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(10px); }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: translateY(-50%) scale(1); }
-  50% { transform: translateY(-50%) scale(1.2); }
+  p {
+    color: #d1d5db;
+    line-height: 1.5;
+    font-size: 0.95rem;
+  }
 }
 
 // CTA Section
@@ -562,6 +547,32 @@ section {
 
   &:hover .arrow-icon {
     transform: translateX(6px);
+  }
+}
+
+.made-by {
+  margin-top: 2rem;
+  text-align: center;
+  
+  span {
+    color: #f3f4f6;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-style: normal;
+    opacity: 1;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    border-radius: 25px;
+    background: rgba(239, 68, 68, 0.1);
+    display: inline-block;
+    
+    &:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+    }
   }
 }
 
@@ -703,17 +714,25 @@ section {
     }
   }
 
-  .confidence-illustration {
-    width: 250px;
-    height: 150px;
+  .additional-benefits {
+    gap: 1.2rem;
+    max-width: 300px;
   }
 
-  .person-icon {
-    font-size: 2.5rem;
-  }
+  .benefit-card {
+    padding: 1.2rem;
 
-  .milestone {
-    font-size: 1.2rem;
+    .benefit-icon-large {
+      font-size: 2rem;
+    }
+
+    h4 {
+      font-size: 1.1rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
   }
 
   .cta-content {
@@ -811,17 +830,25 @@ section {
     }
   }
 
-  .confidence-illustration {
-    width: 200px;
-    height: 120px;
+  .additional-benefits {
+    gap: 1rem;
+    max-width: 280px;
   }
 
-  .person-icon {
-    font-size: 2rem;
-  }
+  .benefit-card {
+    padding: 1rem;
 
-  .milestone {
-    font-size: 1rem;
+    .benefit-icon-large {
+      font-size: 1.8rem;
+    }
+
+    h4 {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.85rem;
+    }
   }
 
   .cta-content {
@@ -956,10 +983,10 @@ section {
   .beginners-visual {
     margin-top: 1.2rem;
   }
-  .confidence-illustration {
+  .additional-benefits {
     width: 100%;
-    max-width: 220px;
-    height: 100px;
+    max-width: 100%;
+    gap: 1rem;
   }
   .cta-content h2 {
     font-size: 1.3rem;

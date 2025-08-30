@@ -85,53 +85,13 @@
       </div>
     </div>
 
-    <!-- Progress Charts -->
+    <!-- BMI Calculator -->
     <div class="accordion-item">
-      <div class="accordion-header" (click)="toggleSection('charts')">
-        <h2>Progress Charts</h2>
-        <span class="accordion-icon">{{ openSection === 'charts' ? '−' : '+' }}</span>
+      <div class="accordion-header" (click)="toggleSection('bmi')">
+        <h2>BMI Calculator</h2>
+        <span class="accordion-icon">{{ openSection === 'bmi' ? '−' : '+' }}</span>
       </div>
-      <div class="accordion-body" *ngIf="openSection === 'charts'">
-        <div class="progress-charts-section">
-          <h2>📈 Progress Charts</h2>
-          <div class="charts-grid">
-            <div class="chart-card">
-              <h4>Calories Burned</h4>
-              <canvas id="caloriesChart"></canvas> <!-- Chart.js/ngx-charts placeholder -->
-            </div>
-            <div class="chart-card">
-              <h4>Workout Time</h4>
-              <canvas id="workoutTimeChart"></canvas>
-            </div>
-            <div class="chart-card">
-              <h4>Streaks</h4>
-              <canvas id="streaksChart"></canvas>
-            </div>
-            <div class="chart-card">
-              <h4>Weight Lifted</h4>
-              <canvas id="weightLiftedChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Timer & BMI Calculator (Grouped as Tools) -->
-    <div class="accordion-item">
-      <div class="accordion-header" (click)="toggleSection('tools')">
-        <h2>Tools (Timer & BMI Calculator)</h2>
-        <span class="accordion-icon">{{ openSection === 'tools' ? '−' : '+' }}</span>
-      </div>
-      <div class="accordion-body" *ngIf="openSection === 'tools'">
-        <div class="timer-section">
-          <h2>⏱️ Workout Timer</h2>
-          <div class="timer-display">{{ timerDisplay }}</div>
-          <div class="timer-controls">
-            <button (click)="startTimer()" [disabled]="timerRunning">Start</button>
-            <button (click)="pauseTimer()" [disabled]="!timerRunning">Pause</button>
-            <button (click)="resetTimer()">Reset</button>
-          </div>
-        </div>
+      <div class="accordion-body" *ngIf="openSection === 'bmi'">
         <div class="bmi-section">
           <h2>🧮 BMI Calculator</h2>
           <form (ngSubmit)="calculateBMI()" class="bmi-form">
@@ -147,31 +107,170 @@
       </div>
     </div>
 
-    <!-- Goals Section -->
+    <!-- Meal Planning -->
     <div class="accordion-item">
-      <div class="accordion-header" (click)="toggleSection('goals')">
-        <h2>Weekly Goals</h2>
-        <span class="accordion-icon">{{ openSection === 'goals' ? '−' : '+' }}</span>
+      <div class="accordion-header" (click)="toggleSection('meal-plan')">
+        <h2>🍽️ Personalized Meal Plan</h2>
+        <span class="accordion-icon">{{ openSection === 'meal-plan' ? '−' : '+' }}</span>
       </div>
-      <div class="accordion-body" *ngIf="openSection === 'goals'">
-        <div class="goals-section">
-          <h2>🎯 Weekly Goals</h2>
-          <div class="goals-grid">
-            <div *ngFor="let goal of goals" class="goal-card">
-              <div class="goal-header">
-                <h3>{{ goal.name }}</h3>
-                <span class="goal-period">{{ goal.period }}</span>
+      <div class="accordion-body" *ngIf="openSection === 'meal-plan'">
+        <div class="meal-planning-section">
+          <h2>🍽️ AI-Generated Meal Plan</h2>
+          
+          <!-- User Details Form -->
+          <div class="user-details-form">
+            <h3>Your Details</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Age:</label>
+                <input type="number" [(ngModel)]="userDetails.age" min="16" max="100" />
               </div>
-              <div class="goal-progress">
-                <div class="goal-numbers">
-                  <span class="current">{{ goal.current }}</span>
-                  <span class="separator">/</span>
-                  <span class="target">{{ goal.target }}</span>
-                </div>
-                <div class="goal-bar">
-                  <div class="goal-fill" [style.width.%]="getGoalProgress(goal.current, goal.target)"></div>
+              <div class="form-group">
+                <label>Gender:</label>
+                <select [(ngModel)]="userDetails.gender">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Weight (kg):</label>
+                <input type="number" [(ngModel)]="userDetails.weight" min="30" max="300" />
+              </div>
+              <div class="form-group">
+                <label>Height (cm):</label>
+                <input type="number" [(ngModel)]="userDetails.height" min="100" max="250" />
+              </div>
+              <div class="form-group">
+                <label>Fitness Goal:</label>
+                <select [(ngModel)]="userDetails.fitnessGoal">
+                  <option value="lose">Lose Weight</option>
+                  <option value="maintain">Maintain Weight</option>
+                  <option value="gain">Gain Weight</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Diet Type:</label>
+                <select [(ngModel)]="userDetails.dietType">
+                  <option value="balanced">Balanced</option>
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="vegan">Vegan</option>
+                  <option value="low-carb">Low-Carb</option>
+                  <option value="high-protein">High-Protein</option>
+                </select>
+              </div>
+            </div>
+            <button (click)="generateMealPlan()" class="generate-btn">Generate Meal Plan</button>
+          </div>
+
+          <!-- Meal Plan Display -->
+          <div class="meal-plan-display" *ngIf="mealPlan">
+            <div class="meal-plan-header">
+              <h3>Your Daily Meal Plan</h3>
+              <button (click)="regenerateMealPlan()" class="regenerate-btn">🔄 New Plan</button>
+            </div>
+            
+            <!-- Breakfast -->
+            <div class="meal-card">
+              <h4>🌅 Breakfast ({{ mealPlan.breakfast.totalCalories }} cal)</h4>
+              <div class="food-items">
+                <div *ngFor="let food of mealPlan.breakfast.foods" class="food-item">
+                  <span class="food-name">{{ food.name }}</span>
+                  <span class="food-portion">{{ food.portion }}</span>
+                  <span class="food-macros">{{ food.calories }} cal | P: {{ food.protein }}g | C: {{ food.carbs }}g | F: {{ food.fats }}g</span>
                 </div>
               </div>
+              <div class="meal-totals">
+                <strong>Total: {{ mealPlan.breakfast.totalCalories }} cal | P: {{ mealPlan.breakfast.totalProtein }}g | C: {{ mealPlan.breakfast.totalCarbs }}g | F: {{ mealPlan.breakfast.totalFats }}g</strong>
+              </div>
+            </div>
+
+            <!-- Morning Snack -->
+            <div class="meal-card">
+              <h4>☕ Morning Snack ({{ mealPlan.morningSnack.totalCalories }} cal)</h4>
+              <div class="food-items">
+                <div *ngFor="let food of mealPlan.morningSnack.foods" class="food-item">
+                  <span class="food-name">{{ food.name }}</span>
+                  <span class="food-portion">{{ food.portion }}</span>
+                  <span class="food-macros">{{ food.calories }} cal | P: {{ food.protein }}g | C: {{ food.carbs }}g | F: {{ food.fats }}g</span>
+                </div>
+              </div>
+              <div class="meal-totals">
+                <strong>Total: {{ mealPlan.morningSnack.totalCalories }} cal | P: {{ mealPlan.morningSnack.totalProtein }}g | C: {{ mealPlan.morningSnack.totalCarbs }}g | F: {{ mealPlan.morningSnack.totalFats }}g</strong>
+              </div>
+            </div>
+
+            <!-- Lunch -->
+            <div class="meal-card">
+              <h4>🌞 Lunch ({{ mealPlan.lunch.totalCalories }} cal)</h4>
+              <div class="food-items">
+                <div *ngFor="let food of mealPlan.lunch.foods" class="food-item">
+                  <span class="food-name">{{ food.name }}</span>
+                  <span class="food-portion">{{ food.portion }}</span>
+                  <span class="food-macros">{{ food.calories }} cal | P: {{ food.protein }}g | C: {{ food.carbs }}g | F: {{ food.fats }}g</span>
+                </div>
+              </div>
+              <div class="meal-totals">
+                <strong>Total: {{ mealPlan.lunch.totalCalories }} cal | P: {{ mealPlan.lunch.totalProtein }}g | C: {{ mealPlan.lunch.totalCarbs }}g | F: {{ mealPlan.lunch.totalFats }}g</strong>
+              </div>
+            </div>
+
+            <!-- Afternoon Snack -->
+            <div class="meal-card">
+              <h4>🍎 Afternoon Snack ({{ mealPlan.afternoonSnack.totalCalories }} cal)</h4>
+              <div class="food-items">
+                <div *ngFor="let food of mealPlan.afternoonSnack.foods" class="food-item">
+                  <span class="food-name">{{ food.name }}</span>
+                  <span class="food-portion">{{ food.portion }}</span>
+                  <span class="food-macros">{{ food.calories }} cal | P: {{ food.protein }}g | C: {{ food.carbs }}g | F: {{ food.fats }}g</span>
+                </div>
+              </div>
+              <div class="meal-totals">
+                <strong>Total: {{ mealPlan.afternoonSnack.totalCalories }} cal | P: {{ mealPlan.afternoonSnack.totalProtein }}g | C: {{ mealPlan.afternoonSnack.totalCarbs }}g | F: {{ mealPlan.afternoonSnack.totalFats }}g</strong>
+              </div>
+            </div>
+
+            <!-- Dinner -->
+            <div class="meal-card">
+              <h4>🌙 Dinner ({{ mealPlan.dinner.totalCalories }} cal)</h4>
+              <div class="food-items">
+                <div *ngFor="let food of mealPlan.dinner.foods" class="food-item">
+                  <span class="food-name">{{ food.name }}</span>
+                  <span class="food-portion">{{ food.portion }}</span>
+                  <span class="food-macros">{{ food.calories }} cal | P: {{ food.protein }}g | C: {{ food.carbs }}g | F: {{ food.fats }}g</span>
+                </div>
+              </div>
+              <div class="meal-totals">
+                <strong>Total: {{ mealPlan.dinner.totalCalories }} cal | P: {{ mealPlan.dinner.totalProtein }}g | C: {{ mealPlan.dinner.totalCarbs }}g | F: {{ mealPlan.dinner.totalFats }}g</strong>
+              </div>
+            </div>
+
+            <!-- Daily Summary -->
+            <div class="daily-summary">
+              <h4>📊 Daily Totals</h4>
+              <div class="summary-grid">
+                <div class="summary-item">
+                  <span class="summary-label">Calories:</span>
+                  <span class="summary-value">{{ mealPlan.dailyTotals.calories }}</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Protein:</span>
+                  <span class="summary-value">{{ mealPlan.dailyTotals.protein }}g</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Carbs:</span>
+                  <span class="summary-value">{{ mealPlan.dailyTotals.carbs }}g</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Fats:</span>
+                  <span class="summary-value">{{ mealPlan.dailyTotals.fats }}g</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Health Tip -->
+            <div class="health-tip">
+              <h4>💡 AI Health Tip</h4>
+              <p>{{ mealPlan.healthTip }}</p>
             </div>
           </div>
         </div>
